@@ -28,11 +28,13 @@ INCLUDEPATH = \
 	../../../IBK/src \
 	../../../IBKMK/src
 
-SOURCES += \ \
+SOURCES += \
+        ../../src/SS_Constants.cpp \
 	../../src/SS_EventHandler.cpp \
+        ../../src/SS_Functions.cpp \
 	../../src/SS_Polygon.cpp
 
-HEADERS += \ \
+HEADERS += \
 	../../src/SS_Constants.h \
 	../../src/SS_EventHandler.h \
 	../../src/SS_Functions.h \

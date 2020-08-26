@@ -34,7 +34,7 @@ SUBTARGETS    =  \
 
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-qmake_all: sub-------externals-IBK-projects-Qt-IBK-pro-qmake_all sub-------externals-IBKMK-projects-Qt-IBKMK-pro-qmake_all sub-------externals-SKELETON-projects-Qt-SKELETON-pro-qmake_all FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
-	cd ..\..\SkeletonTest\projects\Qt\ && $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd ..\..\SkeletonTest\projects\Qt\ && $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd ..\..\SkeletonTest\projects\Qt\ && $(MAKE) -f Makefile.SkeletonTest qmake_all
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro: sub-------externals-IBK-projects-Qt-IBK-pro \
@@ -42,131 +42,131 @@ sub-------SkeletonTest-projects-Qt-SkeletonTest-pro: sub-------externals-IBK-pro
 		sub-------externals-SKELETON-projects-Qt-SKELETON-pro FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-make_first: sub-------externals-IBK-projects-Qt-IBK-pro-make_first sub-------externals-IBKMK-projects-Qt-IBKMK-pro-make_first sub-------externals-SKELETON-projects-Qt-SKELETON-pro-make_first FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest 
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest 
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-all: sub-------externals-IBK-projects-Qt-IBK-pro-all sub-------externals-IBKMK-projects-Qt-IBKMK-pro-all sub-------externals-SKELETON-projects-Qt-SKELETON-pro-all FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest all
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest all
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-clean: sub-------externals-IBK-projects-Qt-IBK-pro-clean sub-------externals-IBKMK-projects-Qt-IBKMK-pro-clean sub-------externals-SKELETON-projects-Qt-SKELETON-pro-clean FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest clean
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest clean
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-distclean: sub-------externals-IBK-projects-Qt-IBK-pro-distclean sub-------externals-IBKMK-projects-Qt-IBKMK-pro-distclean sub-------externals-SKELETON-projects-Qt-SKELETON-pro-distclean FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest distclean
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest distclean
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-install_subtargets: sub-------externals-IBK-projects-Qt-IBK-pro-install_subtargets sub-------externals-IBKMK-projects-Qt-IBKMK-pro-install_subtargets sub-------externals-SKELETON-projects-Qt-SKELETON-pro-install_subtargets FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest install
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest install
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-uninstall_subtargets: sub-------externals-IBK-projects-Qt-IBK-pro-uninstall_subtargets sub-------externals-IBKMK-projects-Qt-IBKMK-pro-uninstall_subtargets sub-------externals-SKELETON-projects-Qt-SKELETON-pro-uninstall_subtargets FORCE
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest uninstall
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest uninstall
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-qmake_all: sub-------externals-IBK-projects-Qt-IBK-pro-qmake_all sub-------externals-IBKMK-projects-Qt-IBKMK-pro-qmake_all FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
-	cd ..\..\externals\SKELETON\projects\Qt\ && $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd ..\..\externals\SKELETON\projects\Qt\ && $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd ..\..\externals\SKELETON\projects\Qt\ && $(MAKE) -f Makefile.SKELETON qmake_all
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro: sub-------externals-IBK-projects-Qt-IBK-pro \
 		sub-------externals-IBKMK-projects-Qt-IBKMK-pro FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-make_first: sub-------externals-IBK-projects-Qt-IBK-pro-make_first sub-------externals-IBKMK-projects-Qt-IBKMK-pro-make_first FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON 
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON 
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-all: sub-------externals-IBK-projects-Qt-IBK-pro-all sub-------externals-IBKMK-projects-Qt-IBKMK-pro-all FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON all
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON all
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-clean: sub-------externals-IBK-projects-Qt-IBK-pro-clean sub-------externals-IBKMK-projects-Qt-IBKMK-pro-clean FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON clean
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON clean
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-distclean: sub-------externals-IBK-projects-Qt-IBK-pro-distclean sub-------externals-IBKMK-projects-Qt-IBKMK-pro-distclean FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON distclean
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON distclean
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-install_subtargets: sub-------externals-IBK-projects-Qt-IBK-pro-install_subtargets sub-------externals-IBKMK-projects-Qt-IBKMK-pro-install_subtargets FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON install
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON install
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-uninstall_subtargets: sub-------externals-IBK-projects-Qt-IBK-pro-uninstall_subtargets sub-------externals-IBKMK-projects-Qt-IBKMK-pro-uninstall_subtargets FORCE
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON uninstall
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON uninstall
 sub-------externals-IBK-projects-Qt-IBK-pro-qmake_all:  FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
-	cd ..\..\externals\IBK\projects\Qt\ && $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd ..\..\externals\IBK\projects\Qt\ && $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd ..\..\externals\IBK\projects\Qt\ && $(MAKE) -f Makefile.IBK qmake_all
 sub-------externals-IBK-projects-Qt-IBK-pro: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK
 sub-------externals-IBK-projects-Qt-IBK-pro-make_first: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK 
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK 
 sub-------externals-IBK-projects-Qt-IBK-pro-all: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK all
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK all
 sub-------externals-IBK-projects-Qt-IBK-pro-clean: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK clean
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK clean
 sub-------externals-IBK-projects-Qt-IBK-pro-distclean: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK distclean
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK distclean
 sub-------externals-IBK-projects-Qt-IBK-pro-install_subtargets: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK install
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK install
 sub-------externals-IBK-projects-Qt-IBK-pro-uninstall_subtargets: FORCE
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK uninstall
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK uninstall
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-qmake_all: sub-------externals-IBK-projects-Qt-IBK-pro-qmake_all FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
-	cd ..\..\externals\IBKMK\projects\Qt\ && $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd ..\..\externals\IBKMK\projects\Qt\ && $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd ..\..\externals\IBKMK\projects\Qt\ && $(MAKE) -f Makefile.IBKMK qmake_all
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro: sub-------externals-IBK-projects-Qt-IBK-pro FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-make_first: sub-------externals-IBK-projects-Qt-IBK-pro-make_first FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK 
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK 
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-all: sub-------externals-IBK-projects-Qt-IBK-pro-all FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK all
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK all
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-clean: sub-------externals-IBK-projects-Qt-IBK-pro-clean FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK clean
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK clean
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-distclean: sub-------externals-IBK-projects-Qt-IBK-pro-distclean FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK distclean
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK distclean
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-install_subtargets: sub-------externals-IBK-projects-Qt-IBK-pro-install_subtargets FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK install
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK install
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-uninstall_subtargets: sub-------externals-IBK-projects-Qt-IBK-pro-uninstall_subtargets FORCE
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK uninstall
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK uninstall
 
 Makefile: StraightSkeletonLib.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.conf C:\Qt\5.11.3\msvc2015_64\mkspecs\features\spec_pre.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\common\angle.conf \
@@ -207,10 +207,14 @@ Makefile: StraightSkeletonLib.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qm
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bootstrap_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_designer.pri \
@@ -236,6 +240,8 @@ Makefile: StraightSkeletonLib.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qm
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_opengl.pri \
@@ -250,6 +256,8 @@ Makefile: StraightSkeletonLib.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qm
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_positioningquick_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qmldebug_private.pri \
@@ -265,6 +273,14 @@ Makefile: StraightSkeletonLib.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qm
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script_private.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools.pri \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_sensors.pri \
@@ -366,10 +382,14 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_axserver_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bootstrap_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_designer.pri:
@@ -395,6 +415,8 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_opengl.pri:
@@ -409,6 +431,8 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_positioningquick.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_positioningquick_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qmldebug_private.pri:
@@ -424,6 +448,14 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickparticles_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script_private.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools.pri:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_sensors.pri:
@@ -502,73 +534,73 @@ uninstall_subtargets: sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-uninst
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-debug: sub-------externals-IBK-projects-Qt-IBK-pro-debug sub-------externals-IBKMK-projects-Qt-IBKMK-pro-debug sub-------externals-SKELETON-projects-Qt-SKELETON-pro-debug
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest debug
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest debug
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-debug: sub-------externals-IBK-projects-Qt-IBK-pro-debug sub-------externals-IBKMK-projects-Qt-IBKMK-pro-debug
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON debug
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON debug
 sub-------externals-IBK-projects-Qt-IBK-pro-debug:
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK debug
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK debug
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-debug: sub-------externals-IBK-projects-Qt-IBK-pro-debug
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK debug
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK debug
 debug: sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-debug sub-------externals-SKELETON-projects-Qt-SKELETON-pro-debug sub-------externals-IBK-projects-Qt-IBK-pro-debug sub-------externals-IBKMK-projects-Qt-IBKMK-pro-debug
 
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-release: sub-------externals-IBK-projects-Qt-IBK-pro-release sub-------externals-IBKMK-projects-Qt-IBKMK-pro-release sub-------externals-SKELETON-projects-Qt-SKELETON-pro-release
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest release
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest release
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-release: sub-------externals-IBK-projects-Qt-IBK-pro-release sub-------externals-IBKMK-projects-Qt-IBKMK-pro-release
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON release
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON release
 sub-------externals-IBK-projects-Qt-IBK-pro-release:
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK release
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK release
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-release: sub-------externals-IBK-projects-Qt-IBK-pro-release
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK release
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK release
 release: sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-release sub-------externals-SKELETON-projects-Qt-SKELETON-pro-release sub-------externals-IBK-projects-Qt-IBK-pro-release sub-------externals-IBKMK-projects-Qt-IBKMK-pro-release
 
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-check: sub-------externals-IBK-projects-Qt-IBK-pro-check sub-------externals-IBKMK-projects-Qt-IBKMK-pro-check sub-------externals-SKELETON-projects-Qt-SKELETON-pro-check
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest check
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest check
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-check: sub-------externals-IBK-projects-Qt-IBK-pro-check sub-------externals-IBKMK-projects-Qt-IBKMK-pro-check
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON check
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON check
 sub-------externals-IBK-projects-Qt-IBK-pro-check:
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK check
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK check
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-check: sub-------externals-IBK-projects-Qt-IBK-pro-check
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK check
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK check
 check: sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-check sub-------externals-SKELETON-projects-Qt-SKELETON-pro-check sub-------externals-IBK-projects-Qt-IBK-pro-check sub-------externals-IBKMK-projects-Qt-IBKMK-pro-check
 
 sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-benchmark: sub-------externals-IBK-projects-Qt-IBK-pro-benchmark sub-------externals-IBKMK-projects-Qt-IBKMK-pro-benchmark sub-------externals-SKELETON-projects-Qt-SKELETON-pro-benchmark
 	@if not exist ..\..\SkeletonTest\projects\Qt\ mkdir ..\..\SkeletonTest\projects\Qt\ & if not exist ..\..\SkeletonTest\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\git\StraightSkeletonLib.git\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest benchmark
+	cd ..\..\SkeletonTest\projects\Qt\ && ( if not exist Makefile.SkeletonTest $(QMAKE) -o Makefile.SkeletonTest D:\Gits\StraightSkeletonLib\SkeletonTest\projects\Qt\SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SkeletonTest benchmark
 sub-------externals-SKELETON-projects-Qt-SKELETON-pro-benchmark: sub-------externals-IBK-projects-Qt-IBK-pro-benchmark sub-------externals-IBKMK-projects-Qt-IBKMK-pro-benchmark
 	@if not exist ..\..\externals\SKELETON\projects\Qt\ mkdir ..\..\externals\SKELETON\projects\Qt\ & if not exist ..\..\externals\SKELETON\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\git\StraightSkeletonLib.git\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON benchmark
+	cd ..\..\externals\SKELETON\projects\Qt\ && ( if not exist Makefile.SKELETON $(QMAKE) -o Makefile.SKELETON D:\Gits\StraightSkeletonLib\externals\SKELETON\projects\Qt\SKELETON.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.SKELETON benchmark
 sub-------externals-IBK-projects-Qt-IBK-pro-benchmark:
 	@if not exist ..\..\externals\IBK\projects\Qt\ mkdir ..\..\externals\IBK\projects\Qt\ & if not exist ..\..\externals\IBK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\git\StraightSkeletonLib.git\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK benchmark
+	cd ..\..\externals\IBK\projects\Qt\ && ( if not exist Makefile.IBK $(QMAKE) -o Makefile.IBK D:\Gits\StraightSkeletonLib\externals\IBK\projects\Qt\IBK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBK benchmark
 sub-------externals-IBKMK-projects-Qt-IBKMK-pro-benchmark: sub-------externals-IBK-projects-Qt-IBK-pro-benchmark
 	@if not exist ..\..\externals\IBKMK\projects\Qt\ mkdir ..\..\externals\IBKMK\projects\Qt\ & if not exist ..\..\externals\IBKMK\projects\Qt\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\git\StraightSkeletonLib.git\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK benchmark
+	cd ..\..\externals\IBKMK\projects\Qt\ && ( if not exist Makefile.IBKMK $(QMAKE) -o Makefile.IBKMK D:\Gits\StraightSkeletonLib\externals\IBKMK\projects\Qt\IBKMK.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.IBKMK benchmark
 benchmark: sub-------SkeletonTest-projects-Qt-SkeletonTest-pro-benchmark sub-------externals-SKELETON-projects-Qt-SKELETON-pro-benchmark sub-------externals-IBK-projects-Qt-IBK-pro-benchmark sub-------externals-IBKMK-projects-Qt-IBKMK-pro-benchmark
 install:install_subtargets  FORCE
 

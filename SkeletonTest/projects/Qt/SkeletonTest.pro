@@ -7,7 +7,7 @@ TEMPLATE = app
 # it contains all functions defined for casual libraries
 include( ../../../externals/IBK/projects/Qt/IBK.pri )
 
-SOURCES += \ \
+SOURCES += \
 	../../src/main.cpp
 
 

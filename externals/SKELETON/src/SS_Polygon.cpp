@@ -2,6 +2,8 @@
 #include "SS_Functions.h"
 
 #include <math.h>
+#include <IBK_assert.h>
+#include <IBK_Line.h>
 
 namespace SKELETON {
 
@@ -57,9 +59,26 @@ bool Polygon::pointOnLine(IBK::point2D<double> &point)
     return true;
 }
 
+template <size_t digits>
 bool Polygon::pointOnPoint(IBK::point2D<double> &point)
 {
-    return true;
+    bool onPoint = false;
+    size_t iN;
+    IBK::Line line;
+    for (size_t i=0; i<size(); ++i)
+    {
+        size_t iN = GeometryFunctions().mod((int)i+1, this->size());
+        line = IBK::Line( m_points[iN], m_points[i] );
+        double distanceToLine = distancePointToPolygonSegment(point, i);
+        if(distanceToLine<0.001 &&
+                (  ((m_polyPoints[i].m_x >= point.m_x && point.m_x >= m_polyPoints[iNext].m_x) &&
+                    (m_polyPoints[i].m_y >= point.m_y && point.m_y >= m_polyPoints[iNext].m_y))  ||
+                   ((m_polyPoints[i].m_x <= point.m_x && point.m_x <= m_polyPoints[iNext].m_x) &&
+                    (m_polyPoints[i].m_y <= point.m_y && point.m_y <= m_polyPoints[iNext].m_y)) ))   {
+            onPoint=!onPoint;
+        }
+    }
+    return onPoint;
 }
 
 size_t Polygon::size() const
@@ -79,16 +98,19 @@ double Polygon::distanceToLine(const size_t &pointIdx)
 
 Polygon::Event Polygon::split(size_t splitIdx)
 {
-    return Polygon::Event();
+    IBK_ASSERT(m_events[splitIdx].m_isSplit)
+    return m_events(splitIdx);
 }
 
 Polygon::Event Polygon::edge(size_t edgeIdx)
 {
-    return Polygon::Event();
+    IBK_ASSERT(!m_events[edgeIdx].m_isSplit)
+    return m_events[edgeIdx];
 }
 
 bool Polygon::sortEvents()
 {
+    std::sort(m_events.begin(), m_events.end());
     return true;
 }
 
@@ -98,17 +120,18 @@ bool Polygon::checkSanity()
     std::vector<size_t> delPoints;
     // check if two or more points have the same coordinates
     for (size_t i=0; i<size(); ++i) {
-        for (size_t j=0; j<size(); ++j) {
-            iN = (i+j)%size();
+            iN = (i+1)%size();
             // first store points that need to be deleted
-            if ( SKELETON::checkPoints<4>(m_points[i], m_points[iN]) )
+            if ( SKELETON::checkPoints<4>(m_points[i], m_points[iN]) ) {
                 delPoints.push_back(iN);
-        }
+            }
     }
     // delete points
     for (std::vector<size_t>::reverse_iterator i = delPoints.rbegin();
-         i != delPoints.rend(); ++i)
+         i != delPoints.rend(); ++i) {
+        int test = *i;
         m_points.erase( m_points.begin() + (int)*i );
+    }
     return true;
 }
 

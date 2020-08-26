@@ -58,7 +58,7 @@ public:
 	/*! Contains the data entries in the material table of the geometry section. */
 	struct Point {
 		/*! Constructor. */
-		Point();
+        Point(){}
 
 		Point(const IBK::point2D<double> &point) :
 			m_x(point.m_x),
@@ -78,7 +78,7 @@ public:
 
 	struct Event {
 
-        Event();
+        Event(){}
 
 		Event(const Point &point, const double &distanceToLine, const size_t &lineIdx,
 			  const size_t &pointIdx, const bool &visited, const bool &isSplit) :
