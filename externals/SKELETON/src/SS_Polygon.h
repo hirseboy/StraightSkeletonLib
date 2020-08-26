@@ -36,8 +36,8 @@
 
 */
 
-#ifndef POLYGON_H
-#define POLYGON_H
+#ifndef SS_POLYGON_H
+#define SS_POLYGON_H
 
 #include <IBK_point.h>
 #include <IBKMK_Vector3D.h>
@@ -50,7 +50,10 @@ class Polygon
 public:
 	Polygon();
 
-	Polygon(const std::vector<IBK::point2D<double>> &points);
+    Polygon(const std::vector< IBK::point2D<double> > &points);
+
+    /*! Destructor */
+    ~Polygon();
 
 	/*! Contains the data entries in the material table of the geometry section. */
 	struct Point {
@@ -75,6 +78,8 @@ public:
 
 	struct Event {
 
+        Event();
+
 		Event(const Point &point, const double &distanceToLine, const size_t &lineIdx,
 			  const size_t &pointIdx, const bool &visited, const bool &isSplit) :
 			m_point(point),
@@ -85,7 +90,7 @@ public:
 			m_isSplit(isSplit)
 		{}
 
-		Point			m_point;				///> Stores Point Geometry
+        Point               m_point;				///> Stores Point Geometry
 		size_t				m_lineIdx;				///< for Split Event; corresponding Line Segment
 		size_t				m_pointIdx = 0;			///< Index of Polygon Corner Point
 		double				m_distanceToLine;		///< Distance to Line Segment
@@ -103,6 +108,9 @@ public:
 	/*! Sets the Bisector Vectors of the Polygon Corner Points */
 	bool setBisectors();
 
+    /*! Sets the Vectors for Point i to Point i+1 */
+    bool setVectors();
+
 	/*! Sets the Lines, Line Vectors and its Lenghts of the Polygon */
 	bool setLines();
 
@@ -119,7 +127,7 @@ public:
 	bool pointOnPoint(IBK::point2D<double> &point);
 
 	/*! Returns the number of polygon corner points */
-	unsigned int size() const;
+    size_t size() const;
 
 	/*! Returns the bisector vector of a polygon corner with its pointIdx */
 	IBK::point2D<double> bisector(const size_t &pointIdx);
@@ -139,6 +147,14 @@ public:
 	/*! Returns Split Event with Index eventIdx */
 	Event edge(size_t edgeIdx);
 
+    /*! Sorts the Events by Distance to Line Segment */
+    bool sortEvents();
+
+    /*! Sanity check, that two points do not have the same coordinates */
+    bool checkSanity();
+
+
+
 private:
 
 
@@ -147,12 +163,12 @@ private:
 	std::vector<IBKMK::Vector3D>			m_bisectors;			///< bisectors of polygon
 	bool									m_clockwise = true;		///< clockwise polygon, if true
 	std::vector<double>						m_lineLengths;			///< stores lengths of all segments, Segment with index 0 is defined from point 0 to 1
-	std::vector<IBK::point2D<double>>		m_lineVectors;			///< store the vector from Point i to i+1
+    std::vector< IBK::point2D<double> >		m_lineVectors;			///< store the vector from Point i to i+1
 	bool									m_open = false;			///< stores if polygon is closed
 	std::vector<IBK::Line>					m_vertexLines;			///< Vertex Lines connect corner with event point
 	std::vector<IBK::Line>					m_skeletonLines;		///< Skeleton Lines
-	std::vector<std::vector<Point>>			m_shrinkedPolygons;		///< Shrinked Polygons
-	std::vector<Event>						m_Events;				///< List of edge events
+    std::vector< std::vector<Point> >		m_shrinkedPolygons;		///< Shrinked Polygons
+    std::vector<Event>						m_events;				///< List of edge events
 
 };
 
