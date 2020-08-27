@@ -50,26 +50,39 @@ class Polygon
 public:
 	Polygon();
 
-    Polygon(const std::vector< IBK::point2D<double> > &points);
+	Polygon(const std::vector< IBK::point2D<double> > &points);
 
-    /*! Destructor */
-    ~Polygon();
+	/*! Destructor */
+	~Polygon();
 
 	/*! Contains the data entries in the material table of the geometry section. */
 	struct Point {
 		/*! Constructor. */
-        Point(){}
+		Point(){}
+
+		Point(const double &x, const double &y) :
+			m_x(x),
+			m_y(y)
+		{}
 
 		Point(const IBK::point2D<double> &point) :
 			m_x(point.m_x),
 			m_y(point.m_y)
 		{}
 
-		Point(double x, double y, size_t pointIdx) :
+		Point(const double &x, const double &y, const size_t &pointIdx) :
 			m_x(x),
 			m_y(y),
 			m_pointIdx(pointIdx)
 		{}
+
+		Point addVector(const IBKMK::Vector3D &vector, const size_t &factor) {
+			return Point (m_x+vector.m_x*factor, m_y+vector.m_y*factor);
+		}
+
+		IBK::point2D<double> toIbkPoint() {
+			return IBK::point2D<double> (m_x, m_y);
+		}
 
 		double				m_x;				///< x value
 		double				m_y;				///< y value
@@ -78,24 +91,24 @@ public:
 
 	struct Event {
 
-        Event(){}
+		Event(){}
 
-		Event(const Point &point, const double &distanceToLine, const size_t &lineIdx,
-			  const size_t &pointIdx, const bool &visited, const bool &isSplit) :
+		Event(const Point &point, const double &distanceToLine, const std::vector<size_t> &linesSplit,
+			  const std::vector<size_t> &pointsEdge, const bool &visited, const bool &isSplit) :
 			m_point(point),
-			m_lineIdx(lineIdx),
-			m_pointIdx(pointIdx),
+			m_linesSplit(linesSplit),
+			m_pointsEdge(pointsEdge),
 			m_distanceToLine(distanceToLine),
 			m_visited(visited),
 			m_isSplit(isSplit)
 		{}
 
-        Point               m_point;				///> Stores Point Geometry
-		size_t				m_lineIdx;				///< for Split Event; corresponding Line Segment
-		size_t				m_pointIdx = 0;			///< Index of Polygon Corner Point
-		double				m_distanceToLine;		///< Distance to Line Segment
-		bool				m_visited;				///< Is Event visited
-		bool				m_isSplit;				///< Is it a Split Event
+		Point					m_point;				///> Stores Point Geometry
+		std::vector<size_t>		m_linesSplit;			///< Vector with Indices of Polygon Line Segments refering to Split Event
+		std::vector<size_t>		m_pointsEdge;			///< Vector with Indices of Polygon Corner Points refering to Edge Event
+		double					m_distanceToLine;		///< Distance to Line Segment
+		bool					m_visited;				///< Is Event visited
+		bool					m_isSplit;				///< Is it a Split Event
 
 		bool operator<(const Event &other){
 			if (m_distanceToLine<other.m_distanceToLine)
@@ -104,33 +117,45 @@ public:
 		}
 	};
 
+	/*! Sets Bisectors, Vectors and Lines of Polygon */
+	bool set();
 
 	/*! Sets the Bisector Vectors of the Polygon Corner Points */
 	bool setBisectors();
 
-    /*! Sets the Vectors for Point i to Point i+1 */
-    bool setVectors();
+	/*! Sets the Vectors for Point i to Point i+1 */
+	bool setVectors();
 
 	/*! Sets the Lines, Line Vectors and its Lenghts of the Polygon */
 	bool setLines();
 
+	/*! Sets Edge Events with Distance to Line Segment */
+	bool setEdgeEvents();
+
+	/*! Sets Split Events with Distance to Opposite Line Segment */
+	bool setSplitEvents();
+
+	/*! Checks if the Corner Point of the Polygon is Convex */
+	bool convex(const size_t &pointIdx);
+
 	/*! Gives back the intersection point of two adjacent corner bisectors. True if Point is found and in Polygon
-		\param point Stores the intersection point
 		\param lineIdx Is the Line Index of the Line Segment the Intersection Point is wanted
 	*/
-	bool bisectorIntersection(IBK::point2D<double> &point, size_t lineIdx);
+	bool bisectorIntersection(const size_t &lineIdx, Point &p);
 
 	/*! Checks wheather point lies on a polygon line */
-	bool pointOnLine(IBK::point2D<double> &point);
+	template <size_t digits>
+	bool pointOnLine(const IBK::point2D<double> &point);
 
 	/*! Checks wheather point lies on a polygon point */
-	bool pointOnPoint(IBK::point2D<double> &point);
+	template<size_t digits>
+	bool pointOnPoint(const IBK::point2D<double> &point);
 
-	/*! Returns the number of polygon corner points */
-    size_t size() const;
+	/*! Returns the number of polygon points */
+	size_t size() const;
 
 	/*! Returns the bisector vector of a polygon corner with its pointIdx */
-	IBK::point2D<double> bisector(const size_t &pointIdx);
+	IBKMK::Vector3D bisector(const size_t &pointIdx);
 
 	/*! Returns the distance to specified Line Segmetn of the Polygon */
 	double distanceToLine(const size_t &pointIdx);
@@ -141,18 +166,20 @@ public:
 	*/
 	bool shrinkPolygon(const size_t &pointIdx);
 
-	/*! Returns Split Event with Index eventIdx */
-	Event split(size_t splitIdx);
+	/*! Returns Split or Edge Event with Index eventIdx */
+	Event event(const size_t &eventIdx);
 
-	/*! Returns Split Event with Index eventIdx */
-	Event edge(size_t edgeIdx);
+	/*! Returns Event Size */
+	size_t events();
 
-    /*! Sorts the Events by Distance to Line Segment */
-    bool sortEvents();
+	/*! Sorts the Events by Distance to Line Segment */
+	bool sortEvents();
 
-    /*! Sanity check, that two points do not have the same coordinates */
-    bool checkSanity();
+	/*! Sanity check, that two points do not have the same coordinates */
+	bool checkSanity();
 
+	/*! Returns Area of the Polygon */
+	double area();
 
 
 private:
@@ -163,12 +190,12 @@ private:
 	std::vector<IBKMK::Vector3D>			m_bisectors;			///< bisectors of polygon
 	bool									m_clockwise = true;		///< clockwise polygon, if true
 	std::vector<double>						m_lineLengths;			///< stores lengths of all segments, Segment with index 0 is defined from point 0 to 1
-    std::vector< IBK::point2D<double> >		m_lineVectors;			///< store the vector from Point i to i+1
+	std::vector<IBKMK::Vector3D>        	m_lineVectors;			///< store the vector from Point i to i+1
 	bool									m_open = false;			///< stores if polygon is closed
 	std::vector<IBK::Line>					m_vertexLines;			///< Vertex Lines connect corner with event point
 	std::vector<IBK::Line>					m_skeletonLines;		///< Skeleton Lines
-    std::vector< std::vector<Point> >		m_shrinkedPolygons;		///< Shrinked Polygons
-    std::vector<Event>						m_events;				///< List of edge events
+	std::vector< std::vector<Point> >		m_shrinkedPolygons;		///< Shrinked Polygons
+	std::vector<Event>						m_events;				///< List of edge events
 
 };
 

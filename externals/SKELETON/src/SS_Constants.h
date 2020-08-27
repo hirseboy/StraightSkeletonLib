@@ -5,6 +5,7 @@ namespace SKELETON {
 
 
 const size_t MAX_SCALE = 1E10;
+const double PI = 3.141592653589793238462643383279502884;
 
 }
 

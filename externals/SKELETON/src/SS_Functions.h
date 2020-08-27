@@ -10,62 +10,104 @@ namespace SKELETON {
 
 /*! Checks wether two Points are nearly eaqual. Means that they have the same coordinates */
 template<unsigned int digits>
-bool checkPoints ( const SKELETON::Polygon::Point &p, const SKELETON::Polygon::Point &pOther) {
-    if ( IBK::nearly_equal<digits>(p.m_x, pOther.m_x) && IBK::nearly_equal<digits>(p.m_y, pOther.m_y) )
-        return true;
-    else
-        return false;
+bool checkPoints ( const Polygon::Point &p, const Polygon::Point &pOther) {
+	if ( IBK::nearly_equal<digits>(p.m_x, pOther.m_x) && IBK::nearly_equal<digits>(p.m_y, pOther.m_y) )
+		return true;
+	else
+		return false;
 }
 
 /*! Gives back the vector between two Points
-    \param normalized Sets wether the Vector needs tp be normalized
-    */
-static IBK::point2D<double> vector ( const SKELETON::Polygon::Point &p, const SKELETON::Polygon::Point &pOther, bool normalized){
-    IBKMK::Vector3D vector (p.m_x-pOther.m_x, p.m_y-pOther.m_y, 0.0);
+	\param normalized Sets wether the Vector needs tp be normalized
+	*/
+static IBKMK::Vector3D vector ( const Polygon::Point &p, const Polygon::Point &pOther, bool normalized){
+	IBKMK::Vector3D vector (p.m_x-pOther.m_x, p.m_y-pOther.m_y, 0.0);
 
-    if(IBK::nearly_equal<4>(vector.magnitude(),0.0))
-        throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::vector]");
+	if(IBK::nearly_equal<4>(vector.magnitude(),0.0))
+		throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::vector]");
 
-    if(normalized){
-        vector.normalize();
-    }
-    return IBK::point2D<double>( vector.m_x, vector.m_y );
+	if(normalized){
+		vector.normalize();
+	}
+	return vector;
 }
 
 static double distancePointToLine ( const IBK::point2D<double> &p, const IBK::Line &l ) {
-    IBKMK::Vector3D vl (l.m_p2.m_x-l.m_p1.m_x, l.m_p2.m_y-l.m_p1.m_y, 0.0);
-    IBKMK::Vector3D vP (p.m_x-l.m_p1.m_x, p.m_y-l.m_p1.m_y, 0.0);
-    // find intersection point between both lines
-    double c1	= vl.scalarProduct(vl);
-    double c2	= vP.scalarProduct(vl);
-    double b	= c1 / c2;
-    // determine Point
-    IBK::point2D<double> Pb (l.m_p1.m_x+b*vl.m_x, l.m_p1.m_y+b*vl.m_y);
-    IBKMK::Vector3D vNormal (p.m_x-Pb.m_x,p.m_y-Pb.m_y,0.0);
-    if ( IBK::nearly_equal<4>( vNormal.magnitude(), 0.0 ) )
-        throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::distancePointToLine]");
+	IBKMK::Vector3D vL (l.m_p2.m_x-l.m_p1.m_x, l.m_p2.m_y-l.m_p1.m_y, 0.0);
+	IBKMK::Vector3D vP (p.m_x-l.m_p1.m_x, p.m_y-l.m_p1.m_y, 0.0);
+	// find intersection point between both lines
+	double c1	= vP.scalarProduct(vL);
+	double c2	= vL.scalarProduct(vL);
+	double b	= c1 / c2;
+	// determine Point
+	IBK::point2D<double> Pb (l.m_p1.m_x+b*vL.m_x, l.m_p1.m_y+b*vL.m_y);
+	IBKMK::Vector3D vNormal (p.m_x-Pb.m_x,p.m_y-Pb.m_y,0.0);
+	if ( IBK::nearly_equal<4>( vNormal.magnitude(), 0.0 ) )
+		throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::distancePointToLine]");
 
-    return vNormal.magnitude();
+	return vNormal.magnitude();
+}
+
+static bool pointInPolygon(const Polygon::Point &point, const std::vector<Polygon::Point> &points) {
+	size_t i, j;
+	size_t nvert = points.size();
+	bool inPolygon = false;
+
+	for(i = 0, j = nvert - 1; i < nvert; j = i++) {
+		if( ( (points[i].m_y > point.m_y ) != (points[j].m_y > point.m_y) ) &&
+				(point.m_x < (points[j].m_x - points[i].m_x) * (point.m_y - points[i].m_y) / (points[j].m_y - points[i].m_y) + points[i].m_x)
+				)
+			inPolygon = !inPolygon;
+	}
+
+	return inPolygon;
 }
 
 template <size_t digits>
 static bool pointOnLine ( const IBK::point2D<double> &p, const IBK::Line &l) {
 
-    double distance = distancePointToLine( p, l );
+	double distance = distancePointToLine( p, l );
 
-    if ( distance < (1/std::pow(10,digits)) ) {
+	if ( distance < (1/std::pow(10,digits)) ) {
 
-        double dL = std::sqrt( IBK::f_powN<2>(l.m_p2.m_x-l.m_p1.m_x) + IBK::f_powN<2>(l.m_p2.m_y-l.m_p1.m_y));
-        double dP = std::sqrt( IBK::f_powN<2>(p.m_x-l.m_p1.m_x) + IBK::f_powN<2>(p.m_y-l.m_p1.m_y));
+		double dL = std::sqrt( IBK::f_powN<2>(l.m_p2.m_x-l.m_p1.m_x) + IBK::f_powN<2>(l.m_p2.m_y-l.m_p1.m_y));
+		double dP = std::sqrt( IBK::f_powN<2>(p.m_x-l.m_p1.m_x) + IBK::f_powN<2>(p.m_y-l.m_p1.m_y));
 
-        double scale = dP/dL;
+		double scale = dP/dL;
 
-        if (0 < scale < 1)
-            return true;
-    }
-    return false;
-
+		if (0 < scale < 1)
+			return true;
+	}
+	return false;
 }
+
+/*! Calculates the Center Point of a Triange */
+static bool triangleCenter(Polygon::Point p1, Polygon::Point p2, Polygon::Point p3, Polygon::Point &pCenter) {
+
+	std::vector< IBK::point2D<double> > points;
+	points.push_back(p1.toIbkPoint());
+	points.push_back(p2.toIbkPoint());
+	points.push_back(p3.toIbkPoint());
+
+	Polygon triangle (points);
+
+	return triangle.bisectorIntersection(0, pCenter);
+}
+
+static size_t modMinus( size_t a, size_t b ) {
+	int ret = static_cast<int>(a-1) % static_cast<int>(b);
+	if(ret < 0)
+		ret+=b;
+	return static_cast<unsigned int>(ret);
+}
+
+static size_t modPlus( size_t a, size_t b ) {
+	int ret = static_cast<int>(a+1) % static_cast<int>(b);
+	if(ret < 0)
+		ret+=b;
+	return static_cast<unsigned int>(ret);
+}
+
 }
 
 

@@ -6,27 +6,31 @@
 
 int main(int argc, char * argv[])
 {
-    std::vector< IBK::point2D<double> > points;
-    IBK::point2D<double> point;
-    point.set(0,0);
-    points.push_back(point);
+	std::vector< IBK::point2D<double> > points;
+	IBK::point2D<double> point;
 
-    point.set(1,0);
-    points.push_back(point);
+	point.set(0,2);points.push_back(point);
+	point.set(0,8);points.push_back(point);
+	point.set(2,10);points.push_back(point);
+	point.set(5,10);points.push_back(point);
+	point.set(5.5,8);points.push_back(point);
+	point.set(7,10);points.push_back(point);
+	point.set(11,10);points.push_back(point);
+	point.set(11,5);points.push_back(point);
+	point.set(8,0);points.push_back(point);
+	point.set(2,0);points.push_back(point);
 
-    point.set(2,0);
-    points.push_back(point);
+	SKELETON::Polygon poly(points);
 
-    point.set(2,0);
-    points.push_back(point);
+	size_t test = poly.size();
+	poly.checkSanity();
 
-    point.set(2,0);
-    points.push_back(point);
+	poly.setEdgeEvents();
+	poly.setSplitEvents();
 
-    SKELETON::Polygon poly(points);
+	for (size_t i=0; i<poly.events(); ++i) {
+		std::cout << poly.event(i).m_isSplit << "\t" << poly.event(i).m_point.m_x << "\t" << poly.event(i).m_point.m_y << std::endl;
+	}
 
-    size_t test = poly.size();
-    poly.checkSanity();
-
-
+	return EXIT_SUCCESS;
 }
