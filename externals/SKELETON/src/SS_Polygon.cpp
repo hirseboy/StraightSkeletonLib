@@ -353,8 +353,7 @@ bool Polygon::skeleton()
     return true;
 }
 
-std::vector<Polygon> Polygon::shrinkSplit()
-{
+std::vector<Polygon> Polygon::shrinkSplit() {
     // we start form the split point we found
     // we go in both directions till we reach the Corner Point that made the split event
     // we get then new polygons,
@@ -389,20 +388,80 @@ std::vector<Polygon> Polygon::shrinkSplit()
         polys[i].set();
         for (size_t j=0; j<polys[i].size(); ++j) {
             if ( checkPoints<4>(m_events[0].m_point, polys[i].point(j)) )
-                polys[i].m_origin.push_back( Origin ( m_events[0].m_point, j, polys[i].bisector(j) ) );
+                polys[i].m_origin.push_back( Origin ( m_events[0].m_point, j, polys[i].bisector(j), true ) );
         }
     }
 
     return polys;
 }
 
-std::vector<Polygon> Polygon::shrinkEdge()
-{
-    return std::vector<Polygon> ();
+std::vector<Polygon> Polygon::shrinkEdge() {
+    // we start form the split point we found
+    // we go in both directions till we reach the Corner Point that made the split event
+    // we get then new polygons,
+
+    if ( m_events[0].m_isSplit )
+        throw IBK::Exception(IBK::FormatString("Event with shortest Distance is not an Edge Event."), "[Polygon::shrinkSplit]");
+
+
+    CLIPPER::Paths pShrinked;
+    CLIPPER::Path p;
+
+    for (size_t i=0; i<size(); ++i){
+
+        p << CLIPPER::IntPoint(m_points[i].m_x*MAX_SCALE, m_points[i].m_y*MAX_SCALE);
+
+    }
+
+    CLIPPER::ClipperOffset co (MAX_SCALE*MAX_SCALE, 0.25);
+    co.AddPath(p,CLIPPER::jtMiter,CLIPPER::etClosedPolygon);
+    co.Execute(pShrinked, -(m_events[0].m_distanceToLine+MIN_SCALE) * MAX_SCALE );
+
+    std::vector<Polygon> polys;
+    Polygon poly;
+    IBK::Line l;
+
+    if ( !pShrinked.empty() ) {
+        for (size_t i=0; i<pShrinked.size(); ++i) {
+            polys.push_back(poly);
+            for (size_t j=0; j<pShrinked[i].size(); ++j) {
+                polys[i] << Point ((double)pShrinked[i][j].X / MAX_SCALE, (double)pShrinked[i][j].Y / MAX_SCALE );
+            }
+
+            polys[i].set();
+            for (size_t k=0; k<m_origin.size(); ++k) {
+                for (size_t j=0; j<polys[i].size(); ++j) {
+
+                    if ( nearZero<4>( distancePointToLine( polys[i].point(j).toIbkPoint(),
+                                                           IBK::Line (m_origin[k].m_point.addVector(m_origin[k].m_vector,MAX_SCALE).toIbkPoint(),
+                                                                      m_origin[k].m_point.toIbkPoint()) ) ) )
+                        polys[i].m_origin.push_back( Origin ( m_origin[k].m_point, j, m_origin[k].m_vector, m_origin[k].m_isSplit ) );
+                    if ( checkPoints<4>(m_events[0].m_point, polys[i].point(j)) )
+                        polys[i].m_origin.push_back( Origin ( m_events[0].m_point, j, polys[i].bisector(j), false ) );
+                }
+            }
+        }
+        // check for final polygons, we find it by checking if the size is less then 4
+        // so that means that we find a triangle.
+        // now we check all origins, if we can connect it to our final edge event
+        for (size_t i=0; i<polys.size(); ++i) {
+            for (size_t j=0; j<polys[i].origins().size(); ++j) {
+                for (size_t k=0; k<polys[i].events(); ++k) {
+                    IBK::Line l1 (  polys[i].m_origin[j].m_point.toIbkPoint(),
+                                   polys[i].m_origin[j].m_point.addVector(polys[i].m_origin[j].m_vector, MAX_SCALE).toIbkPoint() );
+                    if ( nearZero<4> ( distancePointToLine(  polys[i].event(k).m_point.toIbkPoint(), l1) ) )
+                        polys[i].m_skeletonLines.push_back( IBK::Line ( polys[i].event(k).m_point.toIbkPoint(),
+                                                                        polys[i].m_origin[j].m_point.toIbkPoint() ) );
+                }
+            }
+        }
+    } else
+        throw IBK::Exception( IBK::FormatString("CLIPPER Could not shrink Polygon!"), "[Polygon::shrinkEdge]");
+
+    return polys;
 }
 
-Polygon::Event Polygon::event(const size_t &eventIdx)
-{
+Polygon::Event Polygon::event(const size_t &eventIdx) {
 
     if(m_events.empty())
         throw IBK::Exception(IBK::FormatString("Events are not set in Polygon.").arg(m_bisectors.size()), "[Polygon::split]");
@@ -413,27 +472,23 @@ Polygon::Event Polygon::event(const size_t &eventIdx)
     return m_events[eventIdx];
 }
 
-size_t Polygon::events()
-{
+size_t Polygon::events() {
     if(m_events.empty())
         throw IBK::Exception(IBK::FormatString("Events are not set in Polygon.").arg(m_bisectors.size()), "[Polygon::events]");
 
     return m_events.size();
 }
 
-Polygon::Point Polygon::point(const size_t &pointIdx)
-{
+Polygon::Point Polygon::point(const size_t &pointIdx) {
     return m_points[pointIdx];
 }
 
-bool Polygon::sortEvents()
-{
+bool Polygon::sortEvents() {
     std::sort(m_events.begin(), m_events.end());
     return true;
 }
 
-bool Polygon::checkSanity()
-{
+bool Polygon::checkSanity() {
     size_t iN;
     std::vector<size_t> delPoints;
     // check if two or more points have the same coordinates
@@ -456,6 +511,26 @@ bool Polygon::checkSanity()
 double Polygon::area()
 {
     return m_area;
+}
+
+std::vector<Polygon::Origin> Polygon::origins()
+{
+    return m_origin;
+}
+
+size_t Polygon::skeletons()
+{
+    return m_skeletonLines.size();
+}
+
+IBK::Line Polygon::skeleton(const size_t &lineIdx)
+{
+    if(m_skeletonLines.empty())
+        throw IBK::Exception(IBK::FormatString("Skeleton Lines are not set in Polygon."), "[Polygon::skeletons]");
+    if(lineIdx > skeletons()-1 )
+        throw IBK::Exception(IBK::FormatString("Skeleton Line Index out of range."), "[Polygon::skeletons]");
+
+    return m_skeletonLines[lineIdx];
 }
 
 

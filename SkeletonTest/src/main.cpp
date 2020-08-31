@@ -25,25 +25,44 @@ int main(int argc, char * argv[])
 
     SKELETON::Polygon poly(points);
 
-    std::vector<SKELETON::Polygon> polys = poly.shrink();
+    std::vector<SKELETON::Polygon> polys, tempPolys;
 
-    size_t i=0;
+    polys.push_back(poly);
 
-    do {
-        polys[i].set();
+    while ( !polys.empty() && !SKELETON::nearZero<4>( polys[0].area() ) ) {
 
-        std::vector<SKELETON::Polygon> polysSkel;
-        if ( !SKELETON::nearZero<4>( polys[i].area() ) ) {
-            polysSkel = polys[i].shrink();
-            polys.insert(polys.end(), polysSkel.begin(), polysSkel.end());
+        if ( polys[0].size()>3 ) {
+            tempPolys = polys[0].shrink();
+            polys.insert( polys.end(), tempPolys.begin(), tempPolys.end() );
         }
         else {
-            ++i;
+            // insert empty polygon to store last Edge Point
+            SKELETON::Polygon tempPoly;
+            tempPoly.origins().push_back(SKELETON::Polygon::Origin ( polys[0].event(0).m_point, 0, IBKMK::Vector3D (), false ) );
+            polys.insert( polys.end(), tempPoly );
         }
 
+        std::cout << std::endl;
+        std::cout << std::endl;
+        for (size_t j=0; j<polys[0].size(); ++j) {
+            std::cout << j << "\t" << polys[0].point(j).m_x << "\t" << polys[0].point(j).m_y << std::endl;
+        }
 
+        for (size_t j=0; j<polys[0].origins().size(); ++j) {
+            std::cout << j << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event") << "\t" << polys[0].origins()[j].m_point.m_x << "\t" << polys[0].origins()[j].m_point.m_y << std::endl;
+        }
 
-    } while ( !SKELETON::nearZero<4>( polys[i].area() ) );
+        for (size_t j=0; j<polys[0].skeletons(); ++j) {
+            std::cout << j << "\t\t"    << polys[0].skeleton(j).m_p1.m_x << "\t" << polys[0].skeleton(j).m_p1.m_y << "\t\n\t\t"
+                                        << polys[0].skeleton(j).m_p2.m_x << "\t" << polys[0].skeleton(j).m_p2.m_y << "\t" << std::endl;
+        }
+
+        polys.erase( polys.begin() );
+    }
+
+    // get new Polygons, add to vector with polygons
+    // if edge event happens, take new polygon, save connection and delete old
+    // if split event
 
 
 

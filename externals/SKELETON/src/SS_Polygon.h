@@ -126,15 +126,17 @@ public:
 
         Origin(){}
 
-        Origin(const Point &point, const size_t &pointIdx, const IBKMK::Vector3D &vector):
+        Origin(const Point &point, const size_t &pointIdx, const IBKMK::Vector3D &vector, const bool &isSplit):
             m_point(point),
             m_pointIdx(pointIdx),
-            m_vector(vector)
+            m_vector(vector),
+            m_isSplit(isSplit)
         {}
 
         Point                   m_point;                ///< Origin Point
         size_t                  m_pointIdx;             ///< Point Index
         IBKMK::Vector3D         m_vector;               ///< Vector to Split Event
+        bool                    m_isSplit;              ///< if true Split Event is Origin
     };
 
 	/*! Sets Bisectors, Vectors and Lines of Polygon */
@@ -183,10 +185,11 @@ public:
 	/*! Returns the distance to specified Line Segmetn of the Polygon */
 	double distanceToLine(const size_t &pointIdx);
 
-	/*! Shrinks the polygon to a Bisector Intersection Point in the polygon. Return false, if the point is hitting a
-		Split Event, so that it can't be fitted
-    */
+    /*! Shrinks the Polygon to the Split or Edge Event wh the shortest Distance */
     std::vector<Polygon> shrink();
+
+//    /*! Shrinks the Polygon to the next Edge Event and sets the Origin */
+//    std::vector<Polygon> shrink(const std::vector<Polygon::Origin> &origins);
 
     /*! Returns a Vector with the Straight Skeleton Lines */
     bool skeleton();
@@ -208,6 +211,15 @@ public:
 
 	/*! Returns Area of the Polygon */
 	double area();
+
+    /*! Returns the Origins of the Polygon */
+    std::vector<Origin> origins();
+
+    /*! Returns the Skeleton Lines Size of the Polygon */
+    size_t skeletons();
+
+    /*! Returns a Skeleton Line of the Polygon with in Line Index */
+    IBK::Line skeleton(const size_t &lineIdx);
 
     inline void operator <<(const Point &p) {m_points.push_back(p);}
 
