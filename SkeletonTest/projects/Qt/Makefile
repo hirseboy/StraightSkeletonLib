@@ -240,6 +240,7 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\resolve_config.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\exclusive_builds_post.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\default_post.prf \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\console.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qml_debug.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\precompile_header.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\warn_on.prf \
@@ -249,14 +250,12 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\opengl.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qmake_use.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\file_copies.prf \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\windows.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\testcase_targets.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\exceptions.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\yacc.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\lex.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\silent.prf \
 		SkeletonTest.pro \
-		C:\Qt\5.11.3\msvc2015_64\lib\qtmaind.prl \
 		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Gui.prl \
 		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Core.prl
 	$(QMAKE) -o Makefile SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -425,6 +424,7 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\default_pre.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\resolve_config.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\exclusive_builds_post.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\default_post.prf:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\console.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qml_debug.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\precompile_header.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\warn_on.prf:
@@ -434,14 +434,12 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\features\moc.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\opengl.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qmake_use.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\file_copies.prf:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\windows.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\testcase_targets.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\exceptions.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\yacc.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\lex.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\silent.prf:
 SkeletonTest.pro:
-C:\Qt\5.11.3\msvc2015_64\lib\qtmaind.prl:
 C:\Qt\5.11.3\msvc2015_64\lib\Qt5Gui.prl:
 C:\Qt\5.11.3\msvc2015_64\lib\Qt5Core.prl:
 qmake: FORCE

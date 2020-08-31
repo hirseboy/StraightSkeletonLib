@@ -22,11 +22,13 @@ unix|mac {
 
 
 LIBS += -lIBK \
-		-lIBKMK
+        -lIBKMK \
+        -CLIPPER
 
 INCLUDEPATH = \
 	../../../IBK/src \
-	../../../IBKMK/src
+        ../../../IBKMK/src \
+        ../../../CLIPPER/src
 
 SOURCES += \
 	../../src/SS_EventHandler.cpp \

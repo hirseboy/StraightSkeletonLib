@@ -3,6 +3,7 @@
 
 #include <IBK_point.h>
 #include <IBK_math.h>
+#include <IBK_messages.h>
 
 #include "SS_Polygon.h"
 
@@ -42,9 +43,10 @@ static double distancePointToLine ( const IBK::point2D<double> &p, const IBK::Li
 	// determine Point
 	IBK::point2D<double> Pb (l.m_p1.m_x+b*vL.m_x, l.m_p1.m_y+b*vL.m_y);
 	IBKMK::Vector3D vNormal (p.m_x-Pb.m_x,p.m_y-Pb.m_y,0.0);
-	if ( IBK::nearly_equal<4>( vNormal.magnitude(), 0.0 ) )
-		throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::distancePointToLine]");
-
+    if ( IBK::nearly_equal<4>( vNormal.magnitude(), 0.0 ) ) {
+        IBK::IBK_Message(IBK::FormatString("Vector Length ist equal to Zero!"), IBK::MSG_PROGRESS);
+        return 0.0;
+    }
 	return vNormal.magnitude();
 }
 
@@ -106,6 +108,11 @@ static size_t modPlus( size_t a, size_t b ) {
 	if(ret < 0)
 		ret+=b;
 	return static_cast<unsigned int>(ret);
+}
+
+template <size_t digits>
+static bool nearZero( double a ) {
+    return IBK::nearly_equal<digits>( a , 0.0 );
 }
 
 }
