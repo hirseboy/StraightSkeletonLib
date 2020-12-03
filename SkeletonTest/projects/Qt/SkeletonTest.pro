@@ -1,15 +1,18 @@
-QT       += core
+QT += xml core gui network printsupport widgets
 
 TARGET = SkeletonTest
 TEMPLATE = app
 CONFIG += console
+
+
 
 # this pri must be sourced from all our libraries,
 # it contains all functions defined for casual libraries
 include( ../../../externals/IBK/projects/Qt/IBK.pri )
 
 SOURCES += \
-	../../src/main.cpp
+        ../../src/main.cpp \
+        ../../src/SkeletonGUI.cpp
 
 
 LIBS += \
@@ -25,4 +28,7 @@ INCLUDEPATH = \
                 ../../../externals/CLIPPER/src
 
 HEADERS += \
+                ../../src/SkeletonGUI.h
 
+FORMS += \
+                ../../src/SkeletonGUI.ui

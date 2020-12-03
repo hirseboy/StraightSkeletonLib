@@ -1,3 +1,4 @@
+QT += core
 # -------------------------
 # Project for SKELETON library
 # -------------------------
@@ -5,6 +6,7 @@
 # first we define what we are
 TARGET = SKELETON
 TEMPLATE = lib
+
 
 # this pri must be sourced from all our libraries,
 # it contains all functions defined for casual libraries
