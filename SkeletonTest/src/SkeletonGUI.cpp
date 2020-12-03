@@ -51,6 +51,7 @@ bool SS_GUI::drawPolygons(const std::vector<SKELETON::Polygon> &polys) {
 								height - event.m_point.m_y*scaleFactor-rad,
 								rad*2.0,
 								rad*2.0, penEvent, QBrush(Qt::SolidPattern));
+			break;
 		}
 		// break;
 		m_scene->addPolygon(poly2, penPoly);

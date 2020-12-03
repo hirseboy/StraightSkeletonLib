@@ -42,6 +42,7 @@
 #include <IBK_point.h>
 #include <IBKMK_Vector3D.h>
 #include <IBK_Line.h>
+#include <IBK_math.h>
 
 namespace SKELETON {
 
@@ -126,14 +127,10 @@ public:
 		bool					m_isSplit;				///< Is it a Split Event
 
 		bool operator<(const Event &other){
-			if (m_distanceToLine<other.m_distanceToLine)
-				return true;
-			else if (m_distanceToLine>other.m_distanceToLine)
-				return false;
-			else if (m_isSplit) {
-				return true;
-			}
-			else return false;
+            if ( !IBK::nearly_equal<4>( m_distanceToLine, other.m_distanceToLine) )
+                return ( m_distanceToLine < other.m_distanceToLine ) ;
+            else
+                return ( m_isSplit && !(m_isSplit == other.m_isSplit) );
 		}
 	};
 

@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	SS_GUI w;
 
 	w.show();
-	w.resize(2000,1500);
+	w.resize(1800,900);
 	try {
 		makePolygons(polys, w);
 	} catch (IBK::Exception &ex) {
@@ -74,6 +74,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,5);points.push_back(point);
 #endif
 
+#ifdef poly3
 	point.set(0,0);points.push_back(point);
 	point.set(0,3);points.push_back(point);
 	point.set(1,4);points.push_back(point);
@@ -90,6 +91,21 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(5,0);points.push_back(point);
 	point.set(4,1);points.push_back(point);
 	point.set(3,0);points.push_back(point);
+#endif
+
+	point.set(0,0);points.push_back(point);
+	point.set(1,4);points.push_back(point);
+	point.set(0,5);points.push_back(point);
+	point.set(0,7);points.push_back(point);
+	point.set(1,5);points.push_back(point);
+	point.set(4,4);points.push_back(point);
+	point.set(4,10);points.push_back(point);
+	point.set(5,11);points.push_back(point);
+	point.set(8,6);points.push_back(point);
+	point.set(8,0);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+	point.set(3,3);points.push_back(point);
+
 
 
 	SKELETON::Polygon poly(points, false);
@@ -129,18 +145,18 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 			std::cout << "\nOrigins\n";
 			for (size_t j=0; j<polys[0].origins().size(); ++j) {
 				std::cout << j
-						<< "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event")
+						  << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event")
 						<< "\t" << polys[0].origins()[j].m_point.m_x << "\t" << polys[0].origins()[j].m_point.m_y << std::endl;
 
 				SKELETON::Polygon::Origin ori = polys[0].origins()[j];
 
-//				for ( SKELETON::Polygon::Event event : polys[0].events() ) {
+				//				for ( SKELETON::Polygon::Event event : polys[0].events() ) {
 				for ( size_t k=0; k< polys[0].events().size(); k++) {
 
 					IBK::Line line ( ori.m_point.toIbkPoint(),
 									 ori.m_point.addVector(ori.m_vector, SKELETON::MAX_SCALE).toIbkPoint() );
 
-//					double test = SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line );
+					//					double test = SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line );
 
 
 					// test weather event point lies on bisector line from origin
@@ -168,6 +184,16 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 				QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
 			polys.erase( polys.begin() );
+
+			// check for area
+			std::vector<size_t> delPolys;
+			for ( size_t l=0; l<polys.size(); ++l ) {
+				if ( IBK::nearly_equal<4>( polys[l].area(), 0 ) ) {
+					delPolys.push_back(l);
+				}
+			}
+			for ( size_t l=0; l<delPolys.size(); ++l )
+				polys.erase( polys.begin()+delPolys[l] );
 
 			std::cout << "\n----------------------------------\n";
 		}

@@ -8,7 +8,6 @@
 #include <IBK_assert.h>
 #include <IBK_Line.h>
 #include <IBK_messages.h>
-#include <IBK_math.h>
 
 #include <clipper.hpp>
 
