@@ -2,21 +2,28 @@
 #define SKELETONGUI_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+
+#include <SS_Polygon.h>
 
 namespace Ui {
-class SkeletonGUI;
+class SS_GUI;
 }
 
-class SkeletonGUI : public QWidget
+class SS_GUI : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SkeletonGUI(QWidget *parent = nullptr);
-    ~SkeletonGUI();
+	explicit SS_GUI(QWidget *parent = nullptr);
+	~SS_GUI();
+
+	bool drawPolygons(const std::vector<SKELETON::Polygon> &polys);
 
 private:
-    Ui::SkeletonGUI *ui;
+
+	QGraphicsScene				*m_scene;	///> pointer to scene where polygon is drawn
+	Ui::SS_GUI					*m_ui;		///> pointer to Ui
 };
 
 #endif // SKELETONGUI_H

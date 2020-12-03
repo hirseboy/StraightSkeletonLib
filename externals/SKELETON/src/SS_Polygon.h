@@ -48,12 +48,12 @@ namespace SKELETON {
 class Polygon
 {
 public:
-    Polygon(){}
+	Polygon(){}
 
-	Polygon(const std::vector< IBK::point2D<double> > &points);
+	Polygon(const std::vector< IBK::point2D<double> > &points, bool setEvents = true);
 
 	/*! Destructor */
-    ~Polygon();
+	~Polygon();
 
 	/*! Contains the data entries in the material table of the geometry section. */
 	struct Point {
@@ -76,7 +76,7 @@ public:
 			m_pointIdx(pointIdx)
 		{}
 
-        Point addVector(const IBKMK::Vector3D &vector, const long long int &factor) {
+		Point addVector(const IBKMK::Vector3D &vector, const long long int &factor) {
 			return Point (m_x+vector.m_x*factor, m_y+vector.m_y*factor);
 		}
 
@@ -84,9 +84,9 @@ public:
 			return IBK::point2D<double> (m_x, m_y);
 		}
 
-        IBKMK::Vector3D toIbkVector3D() {
-            return IBKMK::Vector3D (m_x, m_y, 0.0);
-        }
+		IBKMK::Vector3D toIbkVector3D() {
+			return IBKMK::Vector3D (m_x, m_y, 0.0);
+		}
 
 		double				m_x;				///< x value
 		double				m_y;				///< y value
@@ -107,8 +107,18 @@ public:
 			m_isSplit(isSplit)
 		{}
 
+		Event(const Point &point, const double &distanceToLine, const size_t &lineSplit,
+			  const size_t &pointEdge, const bool &visited, const bool &isSplit) :
+			m_point(point),
+			m_distanceToLine(distanceToLine),
+			m_visited(visited),
+			m_isSplit(isSplit)
+		{
+			m_linesSplit.push_back(lineSplit);
+			m_pointsEdge.push_back(pointEdge);
+		}
 
-        Point					m_point;				///< Stores Point Geometry
+		Point					m_point;				///< Stores Point Geometry
 		std::vector<size_t>		m_linesSplit;			///< Vector with Indices of Polygon Line Segments refering to Split Event
 		std::vector<size_t>		m_pointsEdge;			///< Vector with Indices of Polygon Corner Points refering to Edge Event
 		double					m_distanceToLine;		///< Distance to Line Segment
@@ -122,25 +132,43 @@ public:
 		}
 	};
 
-    struct Origin {
+	struct Origin {
 
-        Origin(){}
+		Origin(){}
 
-        Origin(const Point &point, const size_t &pointIdx, const IBKMK::Vector3D &vector, const bool &isSplit):
-            m_point(point),
-            m_pointIdx(pointIdx),
-            m_vector(vector),
-            m_isSplit(isSplit)
-        {}
+		Origin(const Point &point, const size_t &pointIdx, const IBKMK::Vector3D &vector, const bool &isSplit):
+			m_point(point),
+			m_pointIdx(pointIdx),
+			m_vector(vector),
+			m_isSplit(isSplit)
+		{}
 
-        Point                   m_point;                ///< Origin Point
-        size_t                  m_pointIdx;             ///< Point Index
-        IBKMK::Vector3D         m_vector;               ///< Vector to Split Event
-        bool                    m_isSplit;              ///< if true Split Event is Origin
-    };
+		Point                   m_point;                ///< Origin Point
+		size_t                  m_pointIdx;             ///< Point Index
+		IBKMK::Vector3D         m_vector;               ///< Vector to Split Event
+		bool                    m_isSplit;              ///< if true Split Event is Origin
+	};
+
+	struct splitPoint {
+
+		splitPoint(){}
+
+		splitPoint(const IBK::Line &line, const IBK::point2D<double> &point, const bool &intersected):
+			m_line(line),
+			m_intersected(intersected),
+			m_splitPoint(point)
+		{}
+
+		IBK::Line               m_line;
+		bool                    m_intersected;
+		IBK::Line               m_bisectorLine;
+		bool                    m_bisectorIntersected;
+		Point					m_splitPoint;
+
+	};
 
 	/*! Sets Bisectors, Vectors and Lines of Polygon */
-	bool set();
+	bool set(bool setEvents);
 
 	/*! Sets the Bisector Vectors of the Polygon Corner Points */
 	bool setBisectors();
@@ -154,11 +182,17 @@ public:
 	/*! Sets Edge Events with Distance to Line Segment */
 	bool setEdgeEvents();
 
-	/*! Sets Split Events with Distance to Opposite Line Segment */
-	bool setSplitEvents();
+	/*! Sets Split Events with Distance to Opposite Line Segment with the Triangle Method */
+	bool setSplitEventsTrianlge();
 
-    /*! Sets the Area of the Polygon */
-    bool setArea();
+	/*! Sets Split Events with Distance to Opposite Line Segment */
+	bool setSplitEventsBisector();
+
+	/*! Sets the Area of the Polygon */
+	bool setArea();
+
+	/*! */
+	void setSkeletonLines();
 
 	/*! Checks if the Corner Point of the Polygon is Convex */
 	bool convex(const size_t &pointIdx);
@@ -185,23 +219,29 @@ public:
 	/*! Returns the distance to specified Line Segmetn of the Polygon */
 	double distanceToLine(const size_t &pointIdx);
 
-    /*! Shrinks the Polygon to the Split or Edge Event wh the shortest Distance */
-    std::vector<Polygon> shrink();
+	/*! Shrinks the Polygon to the Split or Edge Event wh the shortest Distance */
+	std::vector<Polygon> shrink();
 
-//    /*! Shrinks the Polygon to the next Edge Event and sets the Origin */
-//    std::vector<Polygon> shrink(const std::vector<Polygon::Origin> &origins);
+	//    /*! Shrinks the Polygon to the next Edge Event and sets the Origin */
+	//    std::vector<Polygon> shrink(const std::vector<Polygon::Origin> &origins);
 
-    /*! Returns a Vector with the Straight Skeleton Lines */
-    bool skeleton();
+	/*! Returns a Vector with the Straight Skeleton Lines */
+	bool skeleton();
 
 	/*! Returns Split or Edge Event with Index eventIdx */
 	Event event(const size_t &eventIdx);
 
 	/*! Returns Event Size */
-	size_t events();
+	size_t eventsSize();
 
-    /*! Returns Event Size */
-    Point point(const size_t &pointIdx);
+	/*! Returns Events of Polygon */
+	std::vector< Event > events();
+
+	/*! Returns Points of Polygon */
+	std::vector< Point > points();
+
+	/*! Returns Event Size */
+	Point point(const size_t &pointIdx);
 
 	/*! Sorts the Events by Distance to Line Segment */
 	bool sortEvents();
@@ -212,22 +252,25 @@ public:
 	/*! Returns Area of the Polygon */
 	double area();
 
-    /*! Returns the Origins of the Polygon */
-    std::vector<Origin> origins();
+	/*! Returns the Origins of the Polygon */
+	std::vector<Origin> origins();
 
-    /*! Returns the Skeleton Lines Size of the Polygon */
-    size_t skeletons();
+	/*! Returns the Skeleton Lines Size of the Polygon */
+	size_t skeletons();
 
-    /*! Returns a Skeleton Line of the Polygon with in Line Index */
-    IBK::Line skeleton(const size_t &lineIdx);
+	/*! Returns a Skeleton Line of the Polygon with in Line Index */
+	IBK::Line skeleton(const size_t &lineIdx);
 
-    inline void operator <<(const Point &p) {m_points.push_back(p);}
+	inline void operator <<(const Point &p) {m_points.push_back(p);}
 
+	std::vector<IBK::Line> skeletonLines();
+
+	void addSkeletonLine(const IBK::Line &line);
 private:
 
-    std::vector<Polygon> shrinkSplit();
+	std::vector<Polygon> shrinkSplit();
 
-    std::vector<Polygon> shrinkEdge();
+	std::vector<Polygon> shrinkEdge();
 
 	std::vector<Point>						m_points;				///< points of polygon
 	std::vector<IBK::Line>					m_lines;				///< lines of polygon
@@ -240,8 +283,8 @@ private:
 	std::vector<IBK::Line>					m_skeletonLines;		///< Skeleton Lines
 	std::vector< std::vector<Point> >		m_shrinkedPolygons;		///< Shrinked Polygons
 	std::vector<Event>						m_events;				///< List of edge events
-    std::vector<Origin>                     m_origin;               ///< Origin Point of Polygon for Shrinking
-    double                                  m_area;
+	std::vector<Origin>                     m_origins;               ///< Origin Point of Polygon for Shrinking
+	double                                  m_area;                 ///< Area of Polygon
 
 };
 

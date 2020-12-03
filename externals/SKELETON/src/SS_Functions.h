@@ -6,6 +6,7 @@
 #include <IBK_messages.h>
 
 #include "SS_Polygon.h"
+#include "SS_Constants.h"
 
 namespace SKELETON {
 
@@ -16,6 +17,14 @@ bool checkPoints ( const Polygon::Point &p, const Polygon::Point &pOther) {
 		return true;
 	else
 		return false;
+}
+
+/*! Returns the inner Angle between two Vectors of a Polygon in Degree */
+static bool angleVectorsDeg ( const IBKMK::Vector3D &v1, const IBKMK::Vector3D &v2) {
+	double dot = v1.scalarProduct(v2);    // between [x1, y1, z1] and [x2, y2, z2]
+	double angleInDeg = std::acos( dot/sqrt(v1.magnitude() * v2.magnitude() ) ) / DEG_TO_RAD;
+
+	return angleInDeg;
 }
 
 /*! Gives back the vector between two Points
@@ -44,7 +53,7 @@ static double distancePointToLine ( const IBK::point2D<double> &p, const IBK::Li
 	IBK::point2D<double> Pb (l.m_p1.m_x+b*vL.m_x, l.m_p1.m_y+b*vL.m_y);
 	IBKMK::Vector3D vNormal (p.m_x-Pb.m_x,p.m_y-Pb.m_y,0.0);
     if ( IBK::nearly_equal<4>( vNormal.magnitude(), 0.0 ) ) {
-        IBK::IBK_Message(IBK::FormatString("Vector Length ist equal to Zero!"), IBK::MSG_PROGRESS);
+		IBK::IBK_Message(IBK::FormatString("Vector Length ist equal to Zero!"), IBK::MSG_WARNING, "[SKELETON::distancePointToLine]", IBK::VL_ALL);
         return 0.0;
     }
 	return vNormal.magnitude();
@@ -91,7 +100,7 @@ static bool triangleCenter(Polygon::Point p1, Polygon::Point p2, Polygon::Point 
 	points.push_back(p2.toIbkPoint());
 	points.push_back(p3.toIbkPoint());
 
-	Polygon triangle (points);
+	Polygon triangle (points, false);
 
 	return triangle.bisectorIntersection(0, pCenter);
 }
