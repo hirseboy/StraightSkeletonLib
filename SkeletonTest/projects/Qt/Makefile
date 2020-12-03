@@ -114,14 +114,10 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bootstrap_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_designer.pri \
@@ -147,8 +143,6 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_opengl.pri \
@@ -163,8 +157,6 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_positioningquick_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qmldebug_private.pri \
@@ -180,14 +172,6 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script_private.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools.pri \
-		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml_private.pri \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_sensors.pri \
@@ -248,6 +232,7 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\resources.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\moc.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\opengl.prf \
+		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\uic.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qmake_use.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\file_copies.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\testcase_targets.prf \
@@ -256,7 +241,11 @@ Makefile: SkeletonTest.pro C:\Qt\5.11.3\msvc2015_64\mkspecs\win32-msvc\qmake.con
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\lex.prf \
 		C:\Qt\5.11.3\msvc2015_64\mkspecs\features\silent.prf \
 		SkeletonTest.pro \
+		C:\Qt\5.11.3\msvc2015_64\lib\Qt5PrintSupport.prl \
+		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Widgets.prl \
 		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Gui.prl \
+		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Xml.prl \
+		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Network.prl \
 		C:\Qt\5.11.3\msvc2015_64\lib\Qt5Core.prl
 	$(QMAKE) -o Makefile SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\spec_pre.prf:
@@ -298,14 +287,10 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_axserver_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bluetooth_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_bootstrap_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_charts_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_concurrent_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_core_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_datavisualization_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_dbus_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_designer.pri:
@@ -331,8 +316,6 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_network_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_networkauth_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_nfc_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_opengl.pri:
@@ -347,8 +330,6 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_positioningquick.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_positioningquick_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_printsupport_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_purchasing_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qml_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_qmldebug_private.pri:
@@ -364,14 +345,6 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickparticles_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_remoteobjects_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_repparser_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_script_private.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools.pri:
-C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scripttools_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_scxml_private.pri:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\modules\qt_lib_sensors.pri:
@@ -432,6 +405,7 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qt.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\resources.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\moc.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\win32\opengl.prf:
+C:\Qt\5.11.3\msvc2015_64\mkspecs\features\uic.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\qmake_use.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\file_copies.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\testcase_targets.prf:
@@ -440,7 +414,11 @@ C:\Qt\5.11.3\msvc2015_64\mkspecs\features\yacc.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\lex.prf:
 C:\Qt\5.11.3\msvc2015_64\mkspecs\features\silent.prf:
 SkeletonTest.pro:
+C:\Qt\5.11.3\msvc2015_64\lib\Qt5PrintSupport.prl:
+C:\Qt\5.11.3\msvc2015_64\lib\Qt5Widgets.prl:
 C:\Qt\5.11.3\msvc2015_64\lib\Qt5Gui.prl:
+C:\Qt\5.11.3\msvc2015_64\lib\Qt5Xml.prl:
+C:\Qt\5.11.3\msvc2015_64\lib\Qt5Network.prl:
 C:\Qt\5.11.3\msvc2015_64\lib\Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile SkeletonTest.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"

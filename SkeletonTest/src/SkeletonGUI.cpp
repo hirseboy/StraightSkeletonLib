@@ -2,7 +2,7 @@
 #include "ui_SkeletonGUI.h"
 
 SS_GUI::SS_GUI(QWidget *parent) :
-    QWidget(parent),
+	QWidget(parent),
 	m_scene(new QGraphicsScene),
 	m_ui(new Ui::SS_GUI)
 {
@@ -65,4 +65,21 @@ bool SS_GUI::drawPolygons(const std::vector<SKELETON::Polygon> &polys) {
 	m_ui->graphicsViewSkeleton->setScene(m_scene);
 
 	return true;
+}
+
+void SS_GUI::wheelEvent(QWheelEvent *event)
+{
+	if(event->delta() > 0)
+	{
+		m_ui->graphicsViewSkeleton->scale(1.05,1.05);
+	}
+	else
+	{
+		m_ui->graphicsViewSkeleton->scale(1/1.05,1/1.05);
+	}
+}
+
+void SS_GUI::on_pushButtonContinue_pressed()
+{
+	m_draw = true;
 }

@@ -8,6 +8,7 @@
 #include <SS_Functions.h>
 
 #include <QApplication>
+#include <QTime>
 
 #include "SkeletonGUI.h"
 
@@ -22,8 +23,12 @@ int main(int argc, char *argv[])
 	SS_GUI w;
 
 	w.show();
-
-	makePolygons(polys, w);
+	w.resize(2000,1500);
+	try {
+		makePolygons(polys, w);
+	} catch (IBK::Exception &ex) {
+		ex.writeMsgStackToError();
+	}
 
 	return a.exec();
 }
@@ -45,6 +50,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
+#ifdef poly1
 	point.set(0,2);points.push_back(point);
 	point.set(0,8);points.push_back(point);
 	point.set(2,10);points.push_back(point);
@@ -55,7 +61,35 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(11,5);points.push_back(point);
 	point.set(8,0);points.push_back(point);
 	point.set(2,0);points.push_back(point);
+#endif
 
+#ifdef poly2
+	point.set(0,0);points.push_back(point);
+	point.set(1,6);points.push_back(point);
+	point.set(6,6);points.push_back(point);
+	point.set(6,1);points.push_back(point);
+	point.set(9,6);points.push_back(point);
+	point.set(8,0);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+	point.set(3,5);points.push_back(point);
+#endif
+
+	point.set(0,0);points.push_back(point);
+	point.set(0,3);points.push_back(point);
+	point.set(1,4);points.push_back(point);
+	point.set(0,5);points.push_back(point);
+	point.set(0,8);points.push_back(point);
+	point.set(3,8);points.push_back(point);
+	point.set(4,7);points.push_back(point);
+	point.set(5,8);points.push_back(point);
+	point.set(8,8);points.push_back(point);
+	point.set(8,5);points.push_back(point);
+	point.set(7,4);points.push_back(point);
+	point.set(8,3);points.push_back(point);
+	point.set(8,0);points.push_back(point);
+	point.set(5,0);points.push_back(point);
+	point.set(4,1);points.push_back(point);
+	point.set(3,0);points.push_back(point);
 
 
 	SKELETON::Polygon poly(points, false);
@@ -66,6 +100,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 
 	std::cout << "\nSTART\n";
 
+	widget.m_draw = true;
 
 	try {
 
@@ -81,27 +116,42 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 				polys.insert( polys.end(), tempPolys.begin(), tempPolys.end() );
 			}
 			else {
+				// set events
+				polys[0].set(true);
+
 				// insert empty polygon to store last Edge Point
 				SKELETON::Polygon tempPoly;
 				tempPoly.origins().push_back(SKELETON::Polygon::Origin ( polys[0].event(0).m_point, 0, IBKMK::Vector3D (), false ) );
 				polys.insert( polys.end(), tempPoly );
+
 			}
 
 			std::cout << "\nOrigins\n";
 			for (size_t j=0; j<polys[0].origins().size(); ++j) {
-				std::cout << j << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event") << "\t" << polys[0].origins()[j].m_point.m_x << "\t" << polys[0].origins()[j].m_point.m_y << std::endl;
+				std::cout << j
+						<< "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event")
+						<< "\t" << polys[0].origins()[j].m_point.m_x << "\t" << polys[0].origins()[j].m_point.m_y << std::endl;
 
 				SKELETON::Polygon::Origin ori = polys[0].origins()[j];
 
-				for ( SKELETON::Polygon::Event event : polys[0].events() ) {
+//				for ( SKELETON::Polygon::Event event : polys[0].events() ) {
+				for ( size_t k=0; k< polys[0].events().size(); k++) {
 
-				IBK::Line line ( ori.m_point.toIbkPoint(),
-								 ori.m_point.addVector(ori.m_vector, SKELETON::MAX_SCALE).toIbkPoint() );
+					IBK::Line line ( ori.m_point.toIbkPoint(),
+									 ori.m_point.addVector(ori.m_vector, SKELETON::MAX_SCALE).toIbkPoint() );
 
-				double test = SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line );
+//					double test = SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line );
 
-				if ( IBK::nearly_equal<3>( SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line ), 0.0 ) )
-					 polys[0].addSkeletonLine( IBK::Line ( ori.m_point.toIbkPoint(), event.m_point.toIbkPoint() ) );
+
+					// test weather event point lies on bisector line from origin
+					// if a inherited polygon exists we hav to take the edge point of it
+					if ( k == 0 || IBK::nearly_equal<3>( polys[0].events()[k].m_distanceToLine, polys[0].events()[k-1].m_distanceToLine ) ) {
+						if ( IBK::nearly_equal<3>( SKELETON::distancePointToLine( polys[0].events()[k].m_point.toIbkPoint(), line ), 0.0 ) ) {
+							polys[0].addSkeletonLine( IBK::Line ( ori.m_point.toIbkPoint(), polys[0].events()[k].m_point.toIbkPoint() ) );
+						}
+					}
+					else
+						break;
 				}
 			}
 
@@ -112,6 +162,10 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 			}
 
 			widget.drawPolygons(polys);
+
+			QTime dieTime= QTime::currentTime().addSecs(1);
+			while (QTime::currentTime() < dieTime)
+				QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
 			polys.erase( polys.begin() );
 

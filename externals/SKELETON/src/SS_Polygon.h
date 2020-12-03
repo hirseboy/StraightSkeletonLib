@@ -128,6 +128,11 @@ public:
 		bool operator<(const Event &other){
 			if (m_distanceToLine<other.m_distanceToLine)
 				return true;
+			else if (m_distanceToLine>other.m_distanceToLine)
+				return false;
+			else if (m_isSplit) {
+				return true;
+			}
 			else return false;
 		}
 	};

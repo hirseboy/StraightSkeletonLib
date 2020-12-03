@@ -56,10 +56,11 @@ bool Polygon::set(bool setEvents)
 			std::cout << std::endl;
 		}
 
-		// go through all events if we find a events with same size
+		// go through all events if we find events with same size
 		if ( m_events.size()>1 ){
 			for ( size_t k=0; k<m_events.size()-1; ++k ) {
-
+				if ( m_events[0].m_isSplit )
+					break;
 				if ( IBK::nearly_equal<3>(m_events[0].m_distanceToLine, m_events[k+1].m_distanceToLine) ) {
 					if ( SKELETON::checkPoints<3>(  m_events[k].m_point.toIbkPoint(), m_events[k+1].m_point.toIbkPoint() ) ) {
 						IBK::IBK_Message("Event Points have the same Coordinates", IBK::MSG_WARNING, "[Polygon::set]" );
@@ -509,7 +510,6 @@ std::vector<Polygon> Polygon::shrink()
 {
 	set(true);
 
-
 	if (m_events.empty())
 		throw IBK::Exception( IBK::FormatString("Events not set.\n"), "[Polygon::shrink]");
 
@@ -569,9 +569,16 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 		polys[i].m_skeletonLines.insert( polys[i].m_skeletonLines.begin(), m_skeletonLines.begin(), m_skeletonLines.end() );
 
 		polys[i].set(false);
-		for (size_t j=0; j<polys[i].size(); ++j) {
-			if ( checkPoints<4>(m_events[0].m_point, polys[i].point(j)) )
-				polys[i].m_origins.push_back( Origin ( m_events[0].m_point, j, polys[i].bisector(j), true ) );
+
+		// check for points
+		for (size_t k=0; k<m_events.size(); ++k) {
+			if ( k==0 || ( m_events[k].m_distanceToLine == m_events[k-1].m_distanceToLine ) ) {
+				for (size_t j=0; j<polys[i].size(); ++j) {
+					if ( checkPoints<4>(m_events[k].m_point, polys[i].point(j)) )
+						polys[i].m_origins.push_back( Origin ( m_events[k].m_point, j, polys[i].bisector(j), true ) );
+				}
+			} else
+				break;
 		}
 	}
 
@@ -593,8 +600,8 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 	CLIPPER::Paths pShrinked;
 	CLIPPER::Path p;
 
-//	for (size_t i=size(); i>0; --i)
-//		p << CLIPPER::IntPoint(m_points[i-1].m_x*MAX_SCALE, m_points[i-1].m_y*MAX_SCALE);
+	//	for (size_t i=size(); i>0; --i)
+	//		p << CLIPPER::IntPoint(m_points[i-1].m_x*MAX_SCALE, m_points[i-1].m_y*MAX_SCALE);
 
 	for (size_t i=0; i<size(); ++i)
 		p << CLIPPER::IntPoint(m_points[i].m_x*MAX_SCALE, m_points[i].m_y*MAX_SCALE);
@@ -645,9 +652,11 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 				for (size_t k=0; k<polys[i].eventsSize(); ++k) {
 					IBK::Line l1 (  polys[i].m_origins[j].m_point.toIbkPoint(),
 									polys[i].m_origins[j].m_point.addVector(polys[i].m_origins[j].m_vector, MAX_SCALE).toIbkPoint() );
-					if ( nearZero<4> ( distancePointToLine(  polys[i].event(k).m_point.toIbkPoint(), l1) ) )
+					if ( nearZero<4> ( distancePointToLine(  polys[i].event(k).m_point.toIbkPoint(), l1) ) ) {
 						polys[i].m_skeletonLines.push_back( IBK::Line ( polys[i].event(k).m_point.toIbkPoint(),
 																		polys[i].m_origins[j].m_point.toIbkPoint() ) );
+						break;
+					}
 				}
 			}
 		}
