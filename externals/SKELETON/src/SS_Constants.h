@@ -4,6 +4,8 @@
 namespace SKELETON {
 
 
+const long long int MAX_SCALE_CLIPPER = 1E4;
+const long long int MIN_SCALE_CLIPPER = 1E-4;
 const long long int MAX_SCALE = 1E8;
 const double MIN_SCALE = 1E-8;
 const double PI = 3.141592653589793238462643383279502884;

@@ -108,6 +108,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,3);points.push_back(point);
 #endif
 
+#ifdef poly5
 	point.set(0,0);points.push_back(point);
 	point.set(0,5);points.push_back(point);
 	point.set(10,5);points.push_back(point);
@@ -118,11 +119,84 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(5,0);points.push_back(point);
 	point.set(4,1);points.push_back(point);
 	point.set(3,0);points.push_back(point);
+#endif
+
+#ifdef poly6
+	point.set(0,3);points.push_back(point);
+	point.set(0,6);points.push_back(point);
+	point.set(1.5,6);points.push_back(point);
+	point.set(1,7);points.push_back(point);
+	point.set(4,7);points.push_back(point);
+	point.set(4,5.5);points.push_back(point);
+	point.set(5,6);points.push_back(point);
+	point.set(5,3);points.push_back(point);
+	point.set(3.5,3);points.push_back(point);
+	point.set(4,2);points.push_back(point);
+	point.set(1,2);points.push_back(point);
+	point.set(1,3.5);points.push_back(point);
+#endif
+
+#ifdef poly7
+	point.set(0,0);points.push_back(point);
+	point.set(0,5);points.push_back(point);
+	point.set(10,5);points.push_back(point);
+	point.set(10,4);points.push_back(point);
+	point.set(8,3.5);points.push_back(point);
+	point.set(10,3);points.push_back(point);
+	point.set(10,0);points.push_back(point);
+	point.set(5,0);points.push_back(point);
+	point.set(4,1);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+#endif
+
+#ifdef poly7
+	point.set(0,0);points.push_back(point);
+	point.set(0,8);points.push_back(point);
+	point.set(2,8);points.push_back(point);
+	point.set(2,7);points.push_back(point);
+	point.set(8,7);points.push_back(point);
+	point.set(8,3);points.push_back(point);
+	point.set(3,3);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+ #endif
+
+#ifdef poly7
+	point.set(0,0);points.push_back(point);
+	point.set(0,3);points.push_back(point);
+	point.set(1,4);points.push_back(point);
+	point.set(0,5);points.push_back(point);
+	point.set(0,8);points.push_back(point);
+	point.set(3,8);points.push_back(point);
+	point.set(4,7);points.push_back(point);
+	point.set(5,8);points.push_back(point);
+	point.set(8,8);points.push_back(point);
+	point.set(8,5);points.push_back(point);
+	point.set(7,4);points.push_back(point);
+	point.set(8,3);points.push_back(point);
+	point.set(8,0);points.push_back(point);
+	point.set(5,0);points.push_back(point);
+	point.set(4,1);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+#endif
+
+	point.set(0,3);points.push_back(point);
+	point.set(0,6);points.push_back(point);
+	point.set(1,6);points.push_back(point);
+	point.set(1,7);points.push_back(point);
+	point.set(4,7);points.push_back(point);
+	point.set(4,6);points.push_back(point);
+	point.set(5,6);points.push_back(point);
+	point.set(5,3);points.push_back(point);
+	point.set(4,3);points.push_back(point);
+	point.set(4,2);points.push_back(point);
+	point.set(1,2);points.push_back(point);
+	point.set(1,3);points.push_back(point);
 
 
 	SKELETON::Polygon poly(points, false);
 
-	std::vector<SKELETON::Polygon> tempPolys;
+	std::vector<SKELETON::Polygon>	tempPolys;
+	std::vector<IBK::Line>			skeletonLines;
 
 	polys.push_back(poly);
 
@@ -130,9 +204,13 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 
 	widget.m_draw = true;
 
+	int counter = 0;
+
 	try {
 
 		while ( !polys.empty() && !SKELETON::nearZero<4>( polys[0].area() ) ) {
+
+			std::cout << "\nStep:" << ++counter << " ---------------------------\n";
 
 			std::cout << "\nPoints\n";
 			for (size_t j=0; j<polys[0].size(); ++j) {
@@ -157,8 +235,9 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 			std::cout << "\nOrigins\n";
 			for (size_t j=0; j<polys[0].origins().size(); ++j) {
 				std::cout << j
-						  << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event\n" : "Edge Event\n")
-						<< "\t" << polys[0].origins()[j].m_point.m_x << "\t" << polys[0].origins()[j].m_point.m_y << std::endl;
+						  << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event")
+						<< "\t" << polys[0].origins()[j].m_point.m_x << "\t\t" << polys[0].origins()[j].m_point.m_y << "\t"
+						<< "\t" << polys[0].origins()[j].m_vector.m_x << "\t\t" << polys[0].origins()[j].m_vector.m_y << std::endl;
 
 				SKELETON::Polygon::Origin ori = polys[0].origins()[j];
 
@@ -171,7 +250,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 					//					double test = SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line );
 
 
-					// test weather event point lies on bisector line from origin
+					// test whether event point lies on bisector line from origin
 					// if a inherited polygon exists we hav to take the edge point of it
 					if ( k == 0 || IBK::nearly_equal<3>( polys[0].events()[k].m_distanceToLine, polys[0].events()[k-1].m_distanceToLine ) ) {
 						if ( IBK::nearly_equal<3>( SKELETON::distancePointToLine( polys[0].events()[k].m_point.toIbkPoint(), line ), 0.0 ) ) {
@@ -189,25 +268,41 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 						  << polys[0].skeleton(j).m_p2.m_x << "\t" << polys[0].skeleton(j).m_p2.m_y << "\t" << std::endl;
 			}
 
-			widget.drawPolygons(polys);
+			QPen pen;
+			if ( counter == 1 ) {
+				pen.setColor( Qt::black );
+			}
+			else {
+				pen.setColor( Qt::gray );
+				pen.setStyle( Qt::DashLine );
+			}
 
-			QTime dieTime= QTime::currentTime().addSecs(1);
-			while (QTime::currentTime() < dieTime)
-				QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+			widget.drawPolygons(polys, pen);
+
+//			QTime dieTime= QTime::currentTime().addSecs(1);
+//			while (QTime::currentTime() < dieTime)
+//				QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
+
+			if ( !polys[0].skeletonLines().empty())
+				for (size_t n = 1; n < polys.size(); ++n)
+					polys[n].setSkeletonLines( polys[0].skeletonLines() );
+
+			poly.setSkeletonLines( polys[0].skeletonLines() );
 
 			polys.erase( polys.begin() );
 
 			// check for area
 			std::vector<size_t> delPolys;
-			for ( size_t l=0; l<polys.size(); ++l ) {
-				if ( IBK::nearly_equal<4>( polys[l].area(), 0 ) ) {
+			for ( size_t l=0; l<polys.size(); ++l )
+				if ( IBK::nearly_equal<4>( polys[l].area(), 0 ) )
 					delPolys.push_back(l);
-				}
-			}
+
 			for ( size_t l=delPolys.size(); l>0; --l )
 				polys.erase( polys.begin()+delPolys[l-1] );
 
-			polys[0].checkSanity();
+//			if ( !polys.empty() )
+//				polys[0].checkSanity();
+
 
 			std::cout << "\n----------------------------------\n";
 		}
@@ -221,6 +316,8 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	// if edge event happens, take new polygon, save connection and delete old
 	// if split event
 
+	poly.findVertexLines();
+	widget.drawVertexLines(poly.vertexLines());
 
 
 	for (size_t i=0; i<polys.size(); ++i) {

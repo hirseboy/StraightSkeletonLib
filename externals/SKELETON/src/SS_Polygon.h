@@ -127,10 +127,10 @@ public:
 		bool					m_isSplit;				///< Is it a Split Event
 
 		bool operator<(const Event &other){
-            if ( !IBK::nearly_equal<4>( m_distanceToLine, other.m_distanceToLine) )
-                return ( m_distanceToLine < other.m_distanceToLine ) ;
-            else
-                return ( m_isSplit && !(m_isSplit == other.m_isSplit) );
+			if ( !IBK::nearly_equal<4>( m_distanceToLine, other.m_distanceToLine) )
+				return ( m_distanceToLine < other.m_distanceToLine ) ;
+			else
+				return ( m_isSplit && !(m_isSplit == other.m_isSplit) );
 		}
 	};
 
@@ -194,7 +194,10 @@ public:
 	bool setArea();
 
 	/*! */
-	void setSkeletonLines();
+	void setSkeletonLines(const std::vector<IBK::Line> &skeletonLines);
+
+	/*! Finds all bisector skeleton lines */
+	void findVertexLines();
 
 	/*! Checks if the Corner Point of the Polygon is Convex */
 	bool convex(const size_t &pointIdx);
@@ -249,6 +252,7 @@ public:
 	bool sortEvents();
 
 	/*! Sanity check, that two points do not have the same coordinates */
+	template<unsigned int digits>
 	bool checkSanity();
 
 	/*! Returns Area of the Polygon */
@@ -266,6 +270,8 @@ public:
 	inline void operator <<(const Point &p) {m_points.push_back(p);}
 
 	std::vector<IBK::Line> skeletonLines();
+
+	std::vector<IBK::Line> vertexLines();
 
 	void addSkeletonLine(const IBK::Line &line);
 private:

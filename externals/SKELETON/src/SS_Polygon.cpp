@@ -20,7 +20,7 @@ Polygon::Polygon(const std::vector<IBK::point2D<double> > &points, bool setEvent
 		m_points.push_back(Point(points[i]));
 	}
 
-	checkSanity();
+	checkSanity<4>();
 
 	if (!set(setEvents))
 		throw IBK::Exception(IBK::FormatString("Polygon could not be initialized."), "[Polygon::Polygon]");
@@ -66,7 +66,7 @@ bool Polygon::set(bool setEvents)
 						continue;
 					}
 					IBK::Line line ( m_events[k].m_point.toIbkPoint(), m_events[k+1].m_point.toIbkPoint() );
-					m_skeletonLines.push_back( line );
+					addSkeletonLine( line );
 				}
 				else
 					break;
@@ -519,7 +519,10 @@ std::vector<Polygon> Polygon::shrink()
 		if ( SKELETON::checkPoints<3>( m_events[i].m_point, m_events[i-1].m_point ) &&
 			 m_events[i-1].m_isSplit && !m_events[i].m_isSplit)
 			m_events[i-1].m_isSplit = false;
-		else
+		else if ( ( m_events[i-1].m_isSplit && !m_events[i].m_isSplit ) &&
+				  IBK::nearly_equal<3>( m_events[i].m_distanceToLine, m_events[i-1].m_distanceToLine ) ) {
+			addSkeletonLine( IBK::Line(m_events[i-1].m_point.toIbkPoint(), m_events[i].m_point.toIbkPoint() ) );
+		} else
 			break;
 	}
 
@@ -549,11 +552,8 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 	CLIPPER::Paths pShrinked;
 	CLIPPER::Path p;
 
-	for (size_t i=0; i<size(); ++i){
-
+	for (size_t i=0; i<size(); ++i)
 		p << CLIPPER::IntPoint(m_points[i].m_x*MAX_SCALE, m_points[i].m_y*MAX_SCALE);
-
-	}
 
 	CLIPPER::ClipperOffset co (MAX_SCALE*MAX_SCALE, 0.25);
 	co.AddPath(p,CLIPPER::jtMiter,CLIPPER::etClosedPolygon);
@@ -566,9 +566,8 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 	for (size_t i=0; i<pShrinked.size(); ++i) {
 		polys.push_back(poly);
 		// give back polygon from CLIPPER
-		for (size_t j=pShrinked[i].size(); j>0; --j) {
+		for (size_t j=pShrinked[i].size(); j>0; --j)
 			polys[i] << Point ((double)pShrinked[i][j-1].X / MAX_SCALE, (double)pShrinked[i][j-1].Y / MAX_SCALE );
-		}
 
 		// check whether there are already any origins
 		if ( /*pShrinked.size()>1 && */!m_origins.empty() )
@@ -580,10 +579,22 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 
 		// check for points
 		for (size_t k=0; k<m_events.size(); ++k) {
-			if ( k==0 || ( m_events[k].m_distanceToLine == m_events[k-1].m_distanceToLine ) ) {
+			if ( k==0 || ( IBK::nearly_equal<4>( m_events[k].m_distanceToLine, m_events[k-1].m_distanceToLine ) /*||
+										  checkPoints<4>(m_events[k].m_point, m_events[k-1].m_point )*/ ) ) {
 				for (size_t j=0; j<polys[i].size(); ++j) {
-					if ( pShrinked.size()>1 && checkPoints<4>(m_events[k].m_point, polys[i].point(j)) )
+					if ( (  pShrinked.size()>1 && checkPoints<4>(m_events[k].m_point, polys[i].point(j) ) ) /*||
+							  ( eventsSize() > k && checkPoints<4>(m_events[k].m_point, m_events[k+1].m_point ) )*/ )
 						polys[i].m_origins.push_back( Origin ( m_events[k].m_point, j, polys[i].bisector(j), true ) );
+					//					else if ( k>0 && checkPoints<4>(m_events[k].m_point, m_events[k-1].m_point ) ) {
+					//						polys[i].m_origins.push_back( Origin ( m_events[k].m_point, j, polys[i].bisector(j), true ) );
+					//						break;
+					//					}
+					else if ( k>0 && ( ( m_events[k-1].m_isSplit && !m_events[k].m_isSplit ) &&
+							  IBK::nearly_equal<3>( m_events[k].m_distanceToLine, m_events[k-1].m_distanceToLine ) ) ) {
+						if ( checkPoints<3>( m_events[k-1].m_point, polys[i].m_points[j] ))
+							polys[i].m_origins.push_back( SKELETON::Polygon::Origin ( m_events[k-1].m_point, j, polys[i].m_bisectors[j], true ) );
+
+					}
 				}
 			} else
 				break;
@@ -612,12 +623,12 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 	//		p << CLIPPER::IntPoint(m_points[i-1].m_x*MAX_SCALE, m_points[i-1].m_y*MAX_SCALE);
 
 	for (size_t i=0; i<size(); ++i)
-		p << CLIPPER::IntPoint(m_points[i].m_x*MAX_SCALE, m_points[i].m_y*MAX_SCALE);
+		p << CLIPPER::IntPoint(m_points[i].m_x*MAX_SCALE_CLIPPER, m_points[i].m_y*MAX_SCALE_CLIPPER);
 
 
-	CLIPPER::ClipperOffset co (MAX_SCALE*MAX_SCALE, 0.25);
+	CLIPPER::ClipperOffset co (MAX_SCALE_CLIPPER*MAX_SCALE_CLIPPER, 0.25);
 	co.AddPath(p,CLIPPER::jtMiter,CLIPPER::etClosedPolygon);
-	co.Execute(pShrinked, -(m_events[0].m_distanceToLine+MIN_SCALE) * MAX_SCALE );
+	co.Execute(pShrinked, -(m_events[0].m_distanceToLine+MIN_SCALE_CLIPPER) * MAX_SCALE_CLIPPER );
 
 	std::vector<Polygon> polys;
 	Polygon poly;
@@ -627,7 +638,10 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 		for (size_t i=0; i<pShrinked.size(); ++i) {
 			polys.push_back(poly);
 			for (size_t j=pShrinked[i].size(); j>0; --j)
-				polys[i] << Point ((double)pShrinked[i][j-1].X / MAX_SCALE, (double)pShrinked[i][j-1].Y / MAX_SCALE );
+				polys[i] << Point ((double)pShrinked[i][j-1].X / MAX_SCALE_CLIPPER, (double)pShrinked[i][j-1].Y / MAX_SCALE_CLIPPER );
+
+			//			polys[i].checkSanity<3>();
+
 			try {
 				polys[i].set(true);
 			} catch (IBK::Exception &ex) {
@@ -638,20 +652,24 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 			// check whether there are already any origins
 			if ( m_origins.empty() )
 				polys[i].m_origins.push_back( Origin ( m_events[0].m_point, m_events[0].m_pointsEdge[0], m_bisectors[m_events[0].m_pointsEdge[0]] , false) );
-			else
+			else {
 				polys[i].m_origins.insert( polys[i].m_origins.begin(), m_origins.begin(), m_origins.end() );
+			}
+			for (size_t k=0; k<polys[i].size();++k) {
+				if ( checkPoints<3>( m_events[0].m_point, polys[i].point(k) ) )
+					polys[i].m_origins.push_back( Origin ( m_events[0].m_point, m_events[0].m_pointsEdge[0], polys[i].bisector(k) , false) );
+			}
 
 			polys[i].m_skeletonLines.insert( polys[i].m_skeletonLines.begin(), m_skeletonLines.begin(), m_skeletonLines.end() );
-
 
 			for (size_t k=0; k<m_origins.size(); ++k) {
 				for (size_t j=0; j<polys[i].size(); ++j) {
 
-					if ( nearZero<4>( distancePointToLine( polys[i].point(j).toIbkPoint(),
+					if ( nearZero<3>( distancePointToLine( polys[i].point(j).toIbkPoint(),
 														   IBK::Line (m_origins[k].m_point.addVector(m_origins[k].m_vector,MAX_SCALE).toIbkPoint(),
 																	  m_origins[k].m_point.toIbkPoint()) ) ) )
 						polys[i].m_origins.push_back( Origin ( m_origins[k].m_point, j, m_origins[k].m_vector, m_origins[k].m_isSplit ) );
-					if ( checkPoints<4>(m_events[0].m_point, polys[i].point(j)) )
+					if ( checkPoints<3>(m_events[0].m_point, polys[i].point(j)) )
 						polys[i].m_origins.push_back( Origin ( m_events[0].m_point, j, polys[i].bisector(j), false ) );
 				}
 			}
@@ -659,15 +677,22 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 		// check for final polygons, we find it by checking if the size is less then 4
 		// so that means that we find a triangle.
 		// now we check all origins, if we can connect it to our final edge event
+
+		// go through all new polygons
 		for (size_t i=0; i<polys.size(); ++i) {
+			// go through all origins in new poly
 			for (size_t j=0; j<polys[i].origins().size(); ++j) {
+				// go through all events of new poly
 				for (size_t k=0; k<polys[i].eventsSize(); ++k) {
+					// make bisector vector of origin point
 					IBK::Line l1 (  polys[i].m_origins[j].m_point.toIbkPoint(),
 									polys[i].m_origins[j].m_point.addVector(polys[i].m_origins[j].m_vector, MAX_SCALE).toIbkPoint() );
-					if ( nearZero<4> ( distancePointToLine(  polys[i].event(k).m_point.toIbkPoint(), l1) ) ) {
-						polys[i].m_skeletonLines.push_back( IBK::Line ( polys[i].event(k).m_point.toIbkPoint(),
-																		polys[i].m_origins[j].m_point.toIbkPoint() ) );
-						break;
+					// check whether bisector of origin cuts new event point
+					if ( ( k == 0 || IBK::nearly_equal<4> ( polys[i].event(k).m_distanceToLine, polys[i].event(k-1).m_distanceToLine ) ) &&
+						 nearZero<3> ( distancePointToLine(  polys[i].event(k).m_point.toIbkPoint(), l1) ) ) {
+						polys[i].addSkeletonLine( IBK::Line ( polys[i].event(k).m_point.toIbkPoint(),
+															  polys[i].m_origins[j].m_point.toIbkPoint() ) );
+						//						break;
 					}
 				}
 			}
@@ -690,8 +715,8 @@ Polygon::Event Polygon::event(const size_t &eventIdx) {
 }
 
 size_t Polygon::eventsSize() {
-	if(m_events.empty())
-		throw IBK::Exception(IBK::FormatString("Events are not set in Polygon.\n").arg(m_bisectors.size()), "[Polygon::events]");
+	//	if(m_events.empty())
+	//		throw IBK::Exception(IBK::FormatString("Events are not set in Polygon.\n").arg(m_bisectors.size()), "[Polygon::events]");
 
 	return m_events.size();
 }
@@ -715,6 +740,7 @@ bool Polygon::sortEvents() {
 	return true;
 }
 
+template<unsigned int digits>
 bool Polygon::checkSanity() {
 	size_t iN;
 	std::vector<size_t> delPoints;
@@ -750,8 +776,24 @@ std::vector< IBK::Line > Polygon::skeletonLines()
 	return m_skeletonLines;
 }
 
+std::vector<IBK::Line> Polygon::vertexLines()
+{
+	return m_vertexLines;
+}
+
 void Polygon::addSkeletonLine( const IBK::Line &line ) {
-	m_skeletonLines.push_back(line);
+	bool addLine = true;
+	for (size_t i=0; i<m_skeletonLines.size(); ++i) {
+		if ( ( checkPoints<3> ( line.m_p1, m_skeletonLines[i].m_p1 ) &&
+			   checkPoints<3> ( line.m_p2, m_skeletonLines[i].m_p2 ) ) ||
+			 ( checkPoints<3> ( line.m_p1, m_skeletonLines[i].m_p2 ) &&
+			   checkPoints<3> ( line.m_p2, m_skeletonLines[i].m_p1 ) )) {
+			addLine = false;
+			break;
+		}
+	}
+	if ( addLine )
+		m_skeletonLines.push_back(line);
 }
 
 size_t Polygon::skeletons()
@@ -769,8 +811,24 @@ IBK::Line Polygon::skeleton(const size_t &lineIdx)
 	return m_skeletonLines[lineIdx];
 }
 
-void Polygon::setSkeletonLines() {
+void Polygon::setSkeletonLines(const std::vector<IBK::Line> &skeletonLines) {
+
+	for ( size_t j=0; j < skeletonLines.size(); ++j )
+		addSkeletonLine( skeletonLines[j]);
 	return;
+}
+
+void Polygon::findVertexLines()
+{
+	for ( size_t i=0; i<size(); ++i ) {
+
+		for ( size_t j=0; j<m_skeletonLines.size(); ++j ) {
+			if ( nearZero<3>( distancePointToLine( m_skeletonLines[j].m_p1, IBK::Line ( m_points[i].toIbkPoint(), m_points[i].addVector( m_bisectors[i], MAX_SCALE ).toIbkPoint() ) ) ) )
+				m_vertexLines.push_back( IBK::Line ( m_points[i].toIbkPoint(), m_skeletonLines[j].m_p1 ) );
+			else if ( nearZero<3>( distancePointToLine( m_skeletonLines[j].m_p2, IBK::Line ( m_points[i].toIbkPoint(), m_points[i].addVector( m_bisectors[i], MAX_SCALE ).toIbkPoint() ) ) ) )
+				m_vertexLines.push_back( IBK::Line ( m_points[i].toIbkPoint(), m_skeletonLines[j].m_p2 ) );
+		}
+	}
 }
 
 

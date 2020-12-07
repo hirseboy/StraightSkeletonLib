@@ -19,10 +19,11 @@ public:
 	explicit SS_GUI(QWidget *parent = nullptr);
 	~SS_GUI();
 
-	bool drawPolygons(const std::vector<SKELETON::Polygon> &polys);
+	bool drawPolygons(const std::vector<SKELETON::Polygon> &polys, const QPen &pen);
+
+	bool drawVertexLines(const std::vector<IBK::Line> &vertexLines);
 
 	bool						m_draw;		///> sets weather a polygon is drawn
-
 
 protected:
 	void wheelEvent(QWheelEvent* event) override;

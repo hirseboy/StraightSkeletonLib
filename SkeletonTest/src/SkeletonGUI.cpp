@@ -15,12 +15,37 @@ SS_GUI::~SS_GUI()
 	delete m_ui;
 }
 
-bool SS_GUI::drawPolygons(const std::vector<SKELETON::Polygon> &polys) {
+bool SS_GUI::drawVertexLines(const std::vector<IBK::Line> &vertexLines ){
+	QPen penPoly2 (Qt::green, 2, Qt::DashLine);
 
-	QPainter *painter;
+	size_t scaleFactor = 100;
+	double height = m_ui->graphicsViewSkeleton->height();
+
+	for (size_t i = 0; i < vertexLines.size(); ++i) {
+		QLine line (vertexLines[i].m_p1.m_x*scaleFactor,height - vertexLines[i].m_p1.m_y*scaleFactor,
+					vertexLines[i].m_p2.m_x*scaleFactor, height - vertexLines[i].m_p2.m_y*scaleFactor);
+
+		m_scene->addLine( line, penPoly2);
+	}
+
+	m_ui->graphicsViewSkeleton->setScene(m_scene);
+
+	return true;
+}
+
+bool SS_GUI::drawPolygons(const std::vector<SKELETON::Polygon> &polys, const QPen &pen) {
+
+	QPainter *painterSplit;
 	QPen penPoly (Qt::black, 1, Qt::SolidLine);
 	QPen penEvent (Qt::red, 1, Qt::SolidLine);
 	QPen penLine (Qt::blue, 2, Qt::SolidLine);
+
+
+	QPainter *painterEdge;
+	QPen penPoly2 (Qt::black, 1, Qt::SolidLine);
+	QPen penEvent2 (Qt::cyan, 1, Qt::SolidLine);
+	QPen penLine2 (Qt::blue, 2, Qt::SolidLine);
+
 	std::vector< QPointF > eventPoints;
 
 	double height, width;
@@ -43,18 +68,32 @@ bool SS_GUI::drawPolygons(const std::vector<SKELETON::Polygon> &polys) {
 
 		poly2 << poly2[0];
 
-		for ( SKELETON::Polygon::Event event : poly.events() ) {
-			eventPoints.push_back( QPointF ( width - event.m_point.m_x*scaleFactor,
-											 height - event.m_point.m_y*scaleFactor ) );
-			double rad = 5;
-			m_scene->addEllipse(event.m_point.m_x*scaleFactor-rad,
-								height - event.m_point.m_y*scaleFactor-rad,
-								rad*2.0,
-								rad*2.0, penEvent, QBrush(Qt::SolidPattern));
-			break;
+		for ( size_t i=0; i<poly.eventsSize(); ++i ) {
+
+			eventPoints.push_back( QPointF ( width - poly.event(i).m_point.m_x*scaleFactor,
+											 height - poly.event(i).m_point.m_y*scaleFactor ) );
+
+			if( i>0 && IBK::nearly_equal<3>( poly.event(i).m_distanceToLine, poly.event(i).m_distanceToLine ) )
+				break;
+
+//			if ( poly.event(i).m_isSplit ) {
+//				double rad = 5;
+//				m_scene->addEllipse(poly.event(i).m_point.m_x*scaleFactor-rad,
+//									height - poly.event(i).m_point.m_y*scaleFactor-rad,
+//									rad*2.0,
+//									rad*2.0, penEvent, QBrush(Qt::red, Qt::SolidPattern));
+//			} else {
+//				double rad = 5;
+//				m_scene->addEllipse(poly.event(i).m_point.m_x*scaleFactor-rad,
+//									height - poly.event(i).m_point.m_y*scaleFactor-rad,
+//									rad*2.0,
+//									rad*2.0, penEvent2, QBrush(Qt::darkCyan, Qt::SolidPattern));
+//			}
+
+
 		}
 		// break;
-		m_scene->addPolygon(poly2, penPoly);
+		m_scene->addPolygon(poly2, pen);
 
 		for ( IBK::Line line : poly.skeletonLines() )
 			m_scene->addLine( QLineF (	line.m_p1.m_x*scaleFactor,

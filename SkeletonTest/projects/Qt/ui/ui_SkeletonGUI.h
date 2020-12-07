@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'SkeletonGUI.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.3
+** Created by: Qt User Interface Compiler version 5.11.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,11 +11,8 @@
 
 #include <BM_ZoomMeshGraphicsView.h>
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
@@ -53,8 +50,8 @@ public:
 
     void retranslateUi(QWidget *SS_GUI)
     {
-        SS_GUI->setWindowTitle(QApplication::translate("SS_GUI", "Form", Q_NULLPTR));
-        pushButtonContinue->setText(QApplication::translate("SS_GUI", "Continue", Q_NULLPTR));
+        SS_GUI->setWindowTitle(QApplication::translate("SS_GUI", "Form", nullptr));
+        pushButtonContinue->setText(QApplication::translate("SS_GUI", "Continue", nullptr));
     } // retranslateUi
 
 };
