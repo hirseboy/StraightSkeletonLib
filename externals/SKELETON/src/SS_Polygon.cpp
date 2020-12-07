@@ -478,7 +478,7 @@ bool Polygon::pointOnLine(const IBK::point2D<double> &point)
 	size_t iN;
 	IBK::Line line;
 	for (size_t i=0; i<size(); ++i)
-		if (SKELETON::pointOnLine(point, m_lines[i]))
+		if (SKELETON::pointOnLine<digits>(point, m_lines[i]))
 			return true;
 	return false;
 }
@@ -513,6 +513,15 @@ std::vector<Polygon> Polygon::shrink()
 		throw IBK::Exception( IBK::FormatString("Events not set.\n"), "[Polygon::shrink]");
 
 	sortEvents();
+
+	// if points are the same take edge event
+	for ( size_t i=1; i<m_events.size(); ++i ) {
+		if ( SKELETON::checkPoints<3>( m_events[i].m_point, m_events[i-1].m_point ) &&
+			 m_events[i-1].m_isSplit && !m_events[i].m_isSplit)
+			m_events[i-1].m_isSplit = false;
+		else
+			break;
+	}
 
 	if (m_events[0].m_isSplit) {
 		IBK::IBK_Message("SPLIT EVENT", IBK::MSG_PROGRESS, "[Polygon::shrink]", IBK::VL_ALL);
@@ -562,7 +571,7 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 		}
 
 		// check whether there are already any origins
-		if ( !m_origins.empty() )
+		if ( /*pShrinked.size()>1 && */!m_origins.empty() )
 			polys[i].m_origins.insert( polys[i].m_origins.begin(), m_origins.begin(), m_origins.end() );
 
 		polys[i].m_skeletonLines.insert( polys[i].m_skeletonLines.begin(), m_skeletonLines.begin(), m_skeletonLines.end() );
@@ -573,7 +582,7 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 		for (size_t k=0; k<m_events.size(); ++k) {
 			if ( k==0 || ( m_events[k].m_distanceToLine == m_events[k-1].m_distanceToLine ) ) {
 				for (size_t j=0; j<polys[i].size(); ++j) {
-					if ( checkPoints<4>(m_events[k].m_point, polys[i].point(j)) )
+					if ( pShrinked.size()>1 && checkPoints<4>(m_events[k].m_point, polys[i].point(j)) )
 						polys[i].m_origins.push_back( Origin ( m_events[k].m_point, j, polys[i].bisector(j), true ) );
 				}
 			} else
@@ -619,8 +628,12 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 			polys.push_back(poly);
 			for (size_t j=pShrinked[i].size(); j>0; --j)
 				polys[i] << Point ((double)pShrinked[i][j-1].X / MAX_SCALE, (double)pShrinked[i][j-1].Y / MAX_SCALE );
-
-			polys[i].set(true);
+			try {
+				polys[i].set(true);
+			} catch (IBK::Exception &ex) {
+				ex.writeMsgStackToError();
+				throw IBK::Exception ( "Could not set Polygon", "[Polygon::shrinkEdge]" );
+			}
 
 			// check whether there are already any origins
 			if ( m_origins.empty() )
@@ -709,7 +722,7 @@ bool Polygon::checkSanity() {
 	for (size_t i=0; i<size(); ++i) {
 		iN = modPlus(i, size());
 		// first store points that need to be deleted
-		if ( SKELETON::checkPoints<4>(m_points[i], m_points[iN]) ) {
+		if ( SKELETON::checkPoints<3>(m_points[i], m_points[iN]) ) {
 			delPoints.push_back(iN);
 		}
 	}

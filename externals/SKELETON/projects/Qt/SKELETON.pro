@@ -25,7 +25,7 @@ unix|mac {
 
 LIBS += -lIBK \
         -lIBKMK \
-        -CLIPPER
+        -lCLIPPER
 
 INCLUDEPATH = \
 	../../../IBK/src \

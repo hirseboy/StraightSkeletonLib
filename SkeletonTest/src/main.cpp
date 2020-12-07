@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	SS_GUI w;
 
 	w.show();
-	w.resize(1800,900);
+	w.resize(1400,1000);
 	try {
 		makePolygons(polys, w);
 	} catch (IBK::Exception &ex) {
@@ -93,6 +93,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
+#ifdef poly4
 	point.set(0,0);points.push_back(point);
 	point.set(1,4);points.push_back(point);
 	point.set(0,5);points.push_back(point);
@@ -105,7 +106,18 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(8,0);points.push_back(point);
 	point.set(3,0);points.push_back(point);
 	point.set(3,3);points.push_back(point);
+#endif
 
+	point.set(0,0);points.push_back(point);
+	point.set(0,5);points.push_back(point);
+	point.set(10,5);points.push_back(point);
+	point.set(10,4);points.push_back(point);
+	point.set(8,3.5);points.push_back(point);
+	point.set(10,3);points.push_back(point);
+	point.set(10,0);points.push_back(point);
+	point.set(5,0);points.push_back(point);
+	point.set(4,1);points.push_back(point);
+	point.set(3,0);points.push_back(point);
 
 
 	SKELETON::Polygon poly(points, false);
@@ -145,7 +157,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 			std::cout << "\nOrigins\n";
 			for (size_t j=0; j<polys[0].origins().size(); ++j) {
 				std::cout << j
-						  << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event")
+						  << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event\n" : "Edge Event\n")
 						<< "\t" << polys[0].origins()[j].m_point.m_x << "\t" << polys[0].origins()[j].m_point.m_y << std::endl;
 
 				SKELETON::Polygon::Origin ori = polys[0].origins()[j];
@@ -192,14 +204,16 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 					delPolys.push_back(l);
 				}
 			}
-			for ( size_t l=0; l<delPolys.size(); ++l )
-				polys.erase( polys.begin()+delPolys[l] );
+			for ( size_t l=delPolys.size(); l>0; --l )
+				polys.erase( polys.begin()+delPolys[l-1] );
+
+			polys[0].checkSanity();
 
 			std::cout << "\n----------------------------------\n";
 		}
 
 	} catch (IBK::Exception &ex) {
-		std::cout << ex.what();
+		std::cout << ex.location() << "\t" << ex.what() << "\t";
 		ex.writeMsgStackToError();
 		return;
 	}

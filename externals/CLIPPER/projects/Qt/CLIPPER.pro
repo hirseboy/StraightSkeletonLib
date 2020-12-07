@@ -1,7 +1,7 @@
 # ---------------------------
 # Project for Clipper library
 # ---------------------------
-TARGET = Clipper
+TARGET = CLIPPER
 TEMPLATE = lib
 
 # this pri must be sourced from all our libraries,

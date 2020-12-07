@@ -19,12 +19,14 @@ LIBS += \
 		-lIBK \
 		-lIBKMK \
                 -lSKELETON \
+                -lBlockMod \
                 -lCLIPPER
 
 INCLUDEPATH = \
 		../../../externals/IBK/src \
 		../../../externals/IBKMK/src \
                 ../../../externals/SKELETON/src \
+                ../../../externals/BlockMod/src \
                 ../../../externals/CLIPPER/src
 
 HEADERS += \
