@@ -93,7 +93,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
-#ifdef poly4
+//#ifdef poly4
 	point.set(0,0);points.push_back(point);
 	point.set(1,4);points.push_back(point);
 	point.set(0,5);points.push_back(point);
@@ -106,7 +106,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(8,0);points.push_back(point);
 	point.set(3,0);points.push_back(point);
 	point.set(3,3);points.push_back(point);
-#endif
+//#endif
 
 #ifdef poly5
 	point.set(0,0);points.push_back(point);
@@ -149,7 +149,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
-#ifdef poly7
+#ifdef poly8
 	point.set(0,0);points.push_back(point);
 	point.set(0,8);points.push_back(point);
 	point.set(2,8);points.push_back(point);
@@ -160,7 +160,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
  #endif
 
-#ifdef poly7
+#ifdef poly9
 	point.set(0,0);points.push_back(point);
 	point.set(0,3);points.push_back(point);
 	point.set(1,4);points.push_back(point);
@@ -179,6 +179,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
+#ifdef poly10
 	point.set(0,3);points.push_back(point);
 	point.set(0,6);points.push_back(point);
 	point.set(1,6);points.push_back(point);
@@ -191,7 +192,33 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(4,2);points.push_back(point);
 	point.set(1,2);points.push_back(point);
 	point.set(1,3);points.push_back(point);
+#endif
 
+#ifdef poly11
+	point.set(0,0);points.push_back(point);
+	point.set(0,5);points.push_back(point);
+	point.set(10,5);points.push_back(point);
+	point.set(10,3);points.push_back(point);
+	point.set(8,2.5);points.push_back(point);
+	point.set(10,2);points.push_back(point);
+	point.set(10,0);points.push_back(point);
+	point.set(5,0);points.push_back(point);
+	point.set(4,1);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+#endif
+
+#ifdef poly11
+	point.set(0,0);points.push_back(point);
+	point.set(0,8);points.push_back(point);
+	point.set(8,8);points.push_back(point);
+	point.set(8,5);points.push_back(point);
+	point.set(7,4);points.push_back(point);
+	point.set(8,3);points.push_back(point);
+	point.set(8,0);points.push_back(point);
+	point.set(5,0);points.push_back(point);
+	point.set(4,1);points.push_back(point);
+	point.set(3,0);points.push_back(point);
+#endif
 
 	SKELETON::Polygon poly(points, false);
 

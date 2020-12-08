@@ -42,6 +42,12 @@ static IBKMK::Vector3D vector ( const Polygon::Point &p, const Polygon::Point &p
 	return vector;
 }
 
+static double lineLength ( const IBK::Line &line ) {
+	IBKMK::Vector3D vec ( line.m_p1.m_x - line.m_p2.m_x, line.m_p1.m_y - line.m_p2.m_y, 0.0 );
+	return vec.magnitude();
+}
+
+
 static double distancePointToLine ( const IBK::point2D<double> &p, const IBK::Line &l ) {
 	IBKMK::Vector3D vL (l.m_p2.m_x-l.m_p1.m_x, l.m_p2.m_y-l.m_p1.m_y, 0.0);
 	IBKMK::Vector3D vP (p.m_x-l.m_p1.m_x, p.m_y-l.m_p1.m_y, 0.0);
@@ -101,6 +107,9 @@ static bool triangleCenter(Polygon::Point p1, Polygon::Point p2, Polygon::Point 
 	points.push_back(p3.toIbkPoint());
 
 	Polygon triangle (points, false);
+
+	if ( !triangle.checkSanity<3>() )
+		return false;
 
 	return triangle.bisectorIntersection(0, pCenter);
 }

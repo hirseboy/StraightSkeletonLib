@@ -89,6 +89,15 @@ public:
 			return IBKMK::Vector3D (m_x, m_y, 0.0);
 		}
 
+		bool operator==(const Point &other){
+			if ( IBK::nearly_equal<3>( m_x, other.m_x) &&
+				 IBK::nearly_equal<3>( m_y, other.m_y) )
+				return true;
+			else
+				return false;
+		}
+
+
 		double				m_x;				///< x value
 		double				m_y;				///< y value
 		size_t				m_pointIdx = 0;		///< index of origin of edge for shrinking processes
@@ -125,6 +134,14 @@ public:
 		double					m_distanceToLine;		///< Distance to Line Segment
 		bool					m_visited;				///< Is Event visited
 		bool					m_isSplit;				///< Is it a Split Event
+
+		bool operator==(const Event &other){
+			if ( m_point == other.m_point && m_linesSplit == other.m_linesSplit && m_pointsEdge == other.m_pointsEdge &&
+				 m_distanceToLine == other.m_distanceToLine && m_visited == other.m_visited && m_isSplit == other.m_isSplit )
+				return true;
+			else
+				return false;
+		}
 
 		bool operator<(const Event &other){
 			if ( !IBK::nearly_equal<4>( m_distanceToLine, other.m_distanceToLine) )
@@ -273,9 +290,15 @@ public:
 
 	std::vector<IBK::Line> vertexLines();
 
+	/*/* adds a skeleton line to the list of skeleton lines */
 	void addSkeletonLine(const IBK::Line &line);
-private:
 
+	/* adds an event to the list of events */
+	void addEvent( const Event &event );
+
+	/*! returns the count of events with the same distance */
+	size_t eventCount();
+private:
 	std::vector<Polygon> shrinkSplit();
 
 	std::vector<Polygon> shrinkEdge();
