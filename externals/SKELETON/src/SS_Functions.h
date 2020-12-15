@@ -33,7 +33,7 @@ static bool angleVectorsDeg ( const IBKMK::Vector3D &v1, const IBKMK::Vector3D &
 static IBKMK::Vector3D vector ( const Polygon::Point &p, const Polygon::Point &pOther, bool normalized){
 	IBKMK::Vector3D vector (p.m_x-pOther.m_x, p.m_y-pOther.m_y, 0.0);
 
-	if(IBK::nearly_equal<4>(vector.magnitude(),0.0))
+	if(IBK::nearly_equal<DIGITS>(vector.magnitude(),0.0))
 		throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::vector]");
 
 	if(normalized){
@@ -108,7 +108,7 @@ static bool triangleCenter(Polygon::Point p1, Polygon::Point p2, Polygon::Point 
 
 	Polygon triangle (points, false);
 
-	if ( !triangle.checkSanity<3>() )
+	if ( !triangle.checkSanity<DIGITS>() )
 		return false;
 
 	return triangle.bisectorIntersection(0, pCenter);

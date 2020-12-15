@@ -65,10 +65,10 @@ ZoomMeshGraphicsView::ZoomMeshGraphicsView(QWidget *parent) :
 void ZoomMeshGraphicsView::wheelEvent(QWheelEvent *i_event){
 
 	if (i_event->delta() < 0) {
-		zoomOut();
+//		zoomOut();
 	}
 	else {
-		zoomIn();
+//		zoomIn();
 	}
 	i_event->accept();
 }
@@ -198,9 +198,9 @@ void ZoomMeshGraphicsView::leaveEvent(QEvent *event) {
 
 
 void ZoomMeshGraphicsView::mouseMoveEvent(QMouseEvent *i_event) {
-	QGraphicsView::mouseMoveEvent(i_event);
-	m_pos = mapToScene(i_event->pos());
-	viewport()->update();
+//	QGraphicsView::mouseMoveEvent(i_event);
+//	m_pos = mapToScene(i_event->pos());
+//	viewport()->update();
 }
 
 

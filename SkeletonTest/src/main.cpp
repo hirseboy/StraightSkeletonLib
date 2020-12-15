@@ -22,10 +22,10 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	SS_GUI w;
 
-	w.show();
-	w.resize(1400,1000);
+	w.showMaximized();
+	//w.resize(1400,1000);
 	try {
-		makePolygons(polys, w);
+		// makePolygons(polys, w);
 	} catch (IBK::Exception &ex) {
 		ex.writeMsgStackToError();
 	}
@@ -93,7 +93,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
-//#ifdef poly4
+#ifdef poly4
 	point.set(0,0);points.push_back(point);
 	point.set(1,4);points.push_back(point);
 	point.set(0,5);points.push_back(point);
@@ -106,7 +106,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(8,0);points.push_back(point);
 	point.set(3,0);points.push_back(point);
 	point.set(3,3);points.push_back(point);
-//#endif
+#endif
 
 #ifdef poly5
 	point.set(0,0);points.push_back(point);
@@ -179,7 +179,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
-#ifdef poly10
+//#ifdef poly10
 	point.set(0,3);points.push_back(point);
 	point.set(0,6);points.push_back(point);
 	point.set(1,6);points.push_back(point);
@@ -192,7 +192,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(4,2);points.push_back(point);
 	point.set(1,2);points.push_back(point);
 	point.set(1,3);points.push_back(point);
-#endif
+//#endif
 
 #ifdef poly11
 	point.set(0,0);points.push_back(point);
@@ -207,7 +207,7 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(3,0);points.push_back(point);
 #endif
 
-#ifdef poly11
+#ifdef poly12
 	point.set(0,0);points.push_back(point);
 	point.set(0,8);points.push_back(point);
 	point.set(8,8);points.push_back(point);
@@ -222,137 +222,13 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 
 	SKELETON::Polygon poly(points, false);
 
-	std::vector<SKELETON::Polygon>	tempPolys;
-	std::vector<IBK::Line>			skeletonLines;
+	poly.findSkeletonLines();
+	poly.findVertexLines();
 
 	polys.push_back(poly);
-
-	std::cout << "\nSTART\n";
-
-	widget.m_draw = true;
-
-	int counter = 0;
-
-	try {
-
-		while ( !polys.empty() && !SKELETON::nearZero<4>( polys[0].area() ) ) {
-
-			std::cout << "\nStep:" << ++counter << " ---------------------------\n";
-
-			std::cout << "\nPoints\n";
-			for (size_t j=0; j<polys[0].size(); ++j) {
-				std::cout << j << "\t" << polys[0].point(j).m_x << "\t" << polys[0].point(j).m_y << std::endl;
-			}
-
-			if ( polys[0].size()>3 ) {
-				tempPolys = polys[0].shrink();
-				polys.insert( polys.end(), tempPolys.begin(), tempPolys.end() );
-			}
-			else {
-				// set events
-				polys[0].set(true);
-
-				// insert empty polygon to store last Edge Point
-				SKELETON::Polygon tempPoly;
-				tempPoly.origins().push_back(SKELETON::Polygon::Origin ( polys[0].event(0).m_point, 0, IBKMK::Vector3D (), false ) );
-				polys.insert( polys.end(), tempPoly );
-
-			}
-
-			std::cout << "\nOrigins\n";
-			for (size_t j=0; j<polys[0].origins().size(); ++j) {
-				std::cout << j
-						  << "\t" << (polys[0].origins()[j].m_isSplit ? "Split Event" : "Edge Event")
-						<< "\t" << polys[0].origins()[j].m_point.m_x << "\t\t" << polys[0].origins()[j].m_point.m_y << "\t"
-						<< "\t" << polys[0].origins()[j].m_vector.m_x << "\t\t" << polys[0].origins()[j].m_vector.m_y << std::endl;
-
-				SKELETON::Polygon::Origin ori = polys[0].origins()[j];
-
-				//				for ( SKELETON::Polygon::Event event : polys[0].events() ) {
-				for ( size_t k=0; k< polys[0].events().size(); k++) {
-
-					IBK::Line line ( ori.m_point.toIbkPoint(),
-									 ori.m_point.addVector(ori.m_vector, SKELETON::MAX_SCALE).toIbkPoint() );
-
-					//					double test = SKELETON::distancePointToLine( event.m_point.toIbkPoint(), line );
-
-
-					// test whether event point lies on bisector line from origin
-					// if a inherited polygon exists we hav to take the edge point of it
-					if ( k == 0 || IBK::nearly_equal<3>( polys[0].events()[k].m_distanceToLine, polys[0].events()[k-1].m_distanceToLine ) ) {
-						if ( IBK::nearly_equal<3>( SKELETON::distancePointToLine( polys[0].events()[k].m_point.toIbkPoint(), line ), 0.0 ) ) {
-							polys[0].addSkeletonLine( IBK::Line ( ori.m_point.toIbkPoint(), polys[0].events()[k].m_point.toIbkPoint() ) );
-						}
-					}
-					else
-						break;
-				}
-			}
-
-			std::cout << "\nSkeletons\n";
-			for (size_t j=0; j<polys[0].skeletons(); ++j) {
-				std::cout << j << "\t\t"    << polys[0].skeleton(j).m_p1.m_x << "\t" << polys[0].skeleton(j).m_p1.m_y << "\t\n\t\t"
-						  << polys[0].skeleton(j).m_p2.m_x << "\t" << polys[0].skeleton(j).m_p2.m_y << "\t" << std::endl;
-			}
-
-			QPen pen;
-			if ( counter == 1 ) {
-				pen.setColor( Qt::black );
-			}
-			else {
-				pen.setColor( Qt::gray );
-				pen.setStyle( Qt::DashLine );
-			}
-
-			widget.drawPolygons(polys, pen);
-
-//			QTime dieTime= QTime::currentTime().addSecs(1);
-//			while (QTime::currentTime() < dieTime)
-//				QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
-
-			if ( !polys[0].skeletonLines().empty())
-				for (size_t n = 1; n < polys.size(); ++n)
-					polys[n].setSkeletonLines( polys[0].skeletonLines() );
-
-			poly.setSkeletonLines( polys[0].skeletonLines() );
-
-			polys.erase( polys.begin() );
-
-			// check for area
-			std::vector<size_t> delPolys;
-			for ( size_t l=0; l<polys.size(); ++l )
-				if ( IBK::nearly_equal<4>( polys[l].area(), 0 ) )
-					delPolys.push_back(l);
-
-			for ( size_t l=delPolys.size(); l>0; --l )
-				polys.erase( polys.begin()+delPolys[l-1] );
-
-//			if ( !polys.empty() )
-//				polys[0].checkSanity();
-
-
-			std::cout << "\n----------------------------------\n";
-		}
-
-	} catch (IBK::Exception &ex) {
-		std::cout << ex.location() << "\t" << ex.what() << "\t";
-		ex.writeMsgStackToError();
-		return;
-	}
-	// get new Polygons, add to vector with polygons
-	// if edge event happens, take new polygon, save connection and delete old
-	// if split event
-
-	poly.findVertexLines();
+	widget.drawPolygon(poly,QPen (Qt::black, 2, Qt::SolidLine));
 	widget.drawVertexLines(poly.vertexLines());
 
-
-	for (size_t i=0; i<polys.size(); ++i) {
-		std::cout << std::endl;
-		for (size_t j=0; j<polys[i].size(); ++j) {
-			std::cout << j << "\t" << polys[i].point(j).m_x << "\t" << polys[i].point(j).m_y << std::endl;
-		}
-	}
 
 	return;
 }

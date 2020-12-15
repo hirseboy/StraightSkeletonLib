@@ -244,8 +244,8 @@ public:
 	/*! Shrinks the Polygon to the Split or Edge Event wh the shortest Distance */
 	std::vector<Polygon> shrink();
 
-	//    /*! Shrinks the Polygon to the next Edge Event and sets the Origin */
-	//    std::vector<Polygon> shrink(const std::vector<Polygon::Origin> &origins);
+	/*! Set the skeleton lines */
+	void findSkeletonLines();
 
 	/*! Returns a Vector with the Straight Skeleton Lines */
 	bool skeleton();
@@ -270,6 +270,8 @@ public:
 
 	/*! Sanity check, that two points do not have the same coordinates */
 	template<unsigned int digits>
+
+	/*! */
 	bool checkSanity();
 
 	/*! Returns Area of the Polygon */
@@ -284,20 +286,28 @@ public:
 	/*! Returns a Skeleton Line of the Polygon with in Line Index */
 	IBK::Line skeleton(const size_t &lineIdx);
 
-	inline void operator <<(const Point &p) {m_points.push_back(p);}
-
+	/*! */
 	std::vector<IBK::Line> skeletonLines();
 
+	/*! */
 	std::vector<IBK::Line> vertexLines();
 
-	/*/* adds a skeleton line to the list of skeleton lines */
+	/*! adds a skeleton line to the list of skeleton lines */
 	void addSkeletonLine(const IBK::Line &line);
 
-	/* adds an event to the list of events */
+	/*! adds an event to the list of events */
 	void addEvent( const Event &event );
 
 	/*! returns the count of events with the same distance */
 	size_t eventCount();
+
+	inline void operator <<(const Point &p) {m_points.push_back(p);}
+
+	/*! */
+	bool isClockwise();
+
+	std::vector<std::vector<Point> > shrinkedPolygons() const;
+
 private:
 	std::vector<Polygon> shrinkSplit();
 

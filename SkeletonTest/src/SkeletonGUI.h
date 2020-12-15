@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QGraphicsPolygonItem>
 #include <QWheelEvent>
 
 #include <SS_Polygon.h>
@@ -19,19 +20,30 @@ public:
 	explicit SS_GUI(QWidget *parent = nullptr);
 	~SS_GUI();
 
-	bool drawPolygons(const std::vector<SKELETON::Polygon> &polys, const QPen &pen);
+	bool drawPolygon(SKELETON::Polygon polys, const QPen &pen);
 
 	bool drawVertexLines(const std::vector<IBK::Line> &vertexLines);
 
 	bool						m_draw;		///> sets weather a polygon is drawn
 
 protected:
-	void wheelEvent(QWheelEvent* event) override;
+	//void wheelEvent(QWheelEvent* event) override;
+
+	void mousePressEvent(QMouseEvent* event) override;
 
 private slots:
 	void on_pushButtonContinue_pressed();
 
+	void on_pushButtonCalc_clicked();
+
+	void on_Clear_clicked();
+
+	void on_pushButtonClearAll_clicked();
+
 private:
+
+	QGraphicsPolygonItem		*m_polygonItem;
+	QPolygonF					m_polygon;
 
 	QGraphicsScene				*m_scene;	///> pointer to scene where polygon is drawn
 	Ui::SS_GUI					*m_ui;		///> pointer to Ui
