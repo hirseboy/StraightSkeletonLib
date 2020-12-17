@@ -219,10 +219,9 @@ void makePolygons(std::vector<SKELETON::Polygon> &polys, SS_GUI &widget)
 	point.set(4,1);points.push_back(point);
 	point.set(3,0);points.push_back(point);
 #endif
-
 	SKELETON::Polygon poly(points, false);
 
-	poly.findSkeletonLines();
+//	poly.findSkeletonLines();
 	poly.findVertexLines();
 
 	polys.push_back(poly);

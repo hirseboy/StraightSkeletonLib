@@ -162,6 +162,14 @@ public:
 			m_isSplit(isSplit)
 		{}
 
+		bool operator==(const Origin &other){
+			if ( m_point == other.m_point && m_pointIdx == other.m_pointIdx && m_vector == other.m_vector &&
+				 m_isSplit == other.m_isSplit )
+				return true;
+			else
+				return false;
+		}
+
 		Point                   m_point;                ///< Origin Point
 		size_t                  m_pointIdx;             ///< Point Index
 		IBKMK::Vector3D         m_vector;               ///< Vector to Split Event
@@ -308,6 +316,7 @@ public:
 
 	std::vector<std::vector<Point> > shrinkedPolygons() const;
 
+	void addOrigin(const Origin &ori);
 private:
 	std::vector<Polygon> shrinkSplit();
 
@@ -324,7 +333,7 @@ private:
 	std::vector<IBK::Line>					m_skeletonLines;		///< Skeleton Lines
 	std::vector< std::vector<Point> >		m_shrinkedPolygons;		///< Shrinked Polygons
 	std::vector<Event>						m_events;				///< List of edge events
-	std::vector<Origin>                     m_origins;               ///< Origin Point of Polygon for Shrinking
+	std::vector<Origin>                     m_origins;              ///< Origin Point of Polygon for Shrinking
 	double                                  m_area;                 ///< Area of Polygon
 
 };

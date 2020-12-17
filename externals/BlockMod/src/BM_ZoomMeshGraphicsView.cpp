@@ -65,10 +65,10 @@ ZoomMeshGraphicsView::ZoomMeshGraphicsView(QWidget *parent) :
 void ZoomMeshGraphicsView::wheelEvent(QWheelEvent *i_event){
 
 	if (i_event->delta() < 0) {
-//		zoomOut();
+		zoomOut();
 	}
 	else {
-//		zoomIn();
+		zoomIn();
 	}
 	i_event->accept();
 }
@@ -172,6 +172,8 @@ void ZoomMeshGraphicsView::paintEvent(QPaintEvent *i_event){
 		// we paint in view coordinates
 		p.setPen( m_gridColor );
 		p.drawLines(m_majorGrid.data(), m_majorGrid.size());
+
+
 
 	}
 

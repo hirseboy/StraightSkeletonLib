@@ -34,7 +34,8 @@ static IBKMK::Vector3D vector ( const Polygon::Point &p, const Polygon::Point &p
 	IBKMK::Vector3D vector (p.m_x-pOther.m_x, p.m_y-pOther.m_y, 0.0);
 
 	if(IBK::nearly_equal<DIGITS>(vector.magnitude(),0.0))
-		throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::vector]");
+		return IBKMK::Vector3D (0,0,0);
+//	throw IBK::Exception(IBK::FormatString("Vector Length ist equal to Zero!"), "[SKELETON::vector]");
 
 	if(normalized){
 		vector.normalize();
@@ -58,7 +59,7 @@ static double distancePointToLine ( const IBK::point2D<double> &p, const IBK::Li
 	// determine Point
 	IBK::point2D<double> Pb (l.m_p1.m_x+b*vL.m_x, l.m_p1.m_y+b*vL.m_y);
 	IBKMK::Vector3D vNormal (p.m_x-Pb.m_x,p.m_y-Pb.m_y,0.0);
-	if ( IBK::nearly_equal<4>( vNormal.magnitude(), 0.0 ) ) {
+	if ( IBK::nearly_equal<DIGITS>( vNormal.magnitude(), 0.0 ) ) {
 		IBK::IBK_Message(IBK::FormatString("Vector Length ist equal to Zero!"), IBK::MSG_WARNING, "[SKELETON::distancePointToLine]", IBK::VL_ALL);
 		return 0.0;
 	}

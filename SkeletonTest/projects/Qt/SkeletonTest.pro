@@ -2,7 +2,7 @@ QT += xml core gui network printsupport widgets
 
 TARGET = SkeletonTest
 TEMPLATE = app
-CONFIG += console
+# CONFIG += console
 
 
 
@@ -16,15 +16,15 @@ SOURCES += \
 
 
 LIBS += \
-		-lIBK \
-		-lIBKMK \
+                -lIBK \
+                -lIBKMK \
                 -lSKELETON \
                 -lBlockMod \
                 -lCLIPPER
 
 INCLUDEPATH = \
-		../../../externals/IBK/src \
-		../../../externals/IBKMK/src \
+                ../../../externals/IBK/src \
+                ../../../externals/IBKMK/src \
                 ../../../externals/SKELETON/src \
                 ../../../externals/BlockMod/src \
                 ../../../externals/CLIPPER/src

@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPolygonItem>
 #include <QWheelEvent>
+#include <QTableWidgetItem>
+#include <QGraphicsSceneMouseEvent>
 
 #include <SS_Polygon.h>
 
@@ -31,7 +33,10 @@ protected:
 
 	void mousePressEvent(QMouseEvent* event) override;
 
+	void mouseMoveEvent(QMouseEvent *event) override;
+
 private slots:
+
 	void on_pushButtonContinue_pressed();
 
 	void on_pushButtonCalc_clicked();
@@ -40,10 +45,17 @@ private slots:
 
 	void on_pushButtonClearAll_clicked();
 
+	void on_pushButtonAddLine_clicked();
+
+	void on_tableWidget_itemChanged(QTableWidgetItem *item);
+
+	void on_pushButtonDeleteLastLine_clicked();
+
 private:
 
 	QGraphicsPolygonItem		*m_polygonItem;
 	QPolygonF					m_polygon;
+	SKELETON::Polygon			m_tmpPolygon;
 
 	QGraphicsScene				*m_scene;	///> pointer to scene where polygon is drawn
 	Ui::SS_GUI					*m_ui;		///> pointer to Ui
