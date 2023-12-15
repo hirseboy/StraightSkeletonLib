@@ -2,6 +2,7 @@
 #include "ui_SkeletonGUI.h"
 
 #include <SS_Polygon.h>
+#include <SS_Constants.h>
 
 SS_GUI::SS_GUI(QWidget *parent) :
 	QWidget(parent),
@@ -12,29 +13,27 @@ SS_GUI::SS_GUI(QWidget *parent) :
 	m_ui->setupUi(this);
 
 	m_scene->addItem(m_polygonItem);
+	formatPolygon();
 
 	m_ui->graphicsViewSkeleton->centerOn(0,0);
 	m_ui->graphicsViewSkeleton->setScene(m_scene);
-
+	m_ui->graphicsViewSkeleton->setSceneRect(QRect(0,0, 1000, 1500));
+	
 	setMouseTracking(true);
 	m_ui->graphicsViewSkeleton->setMouseTracking(true);
-
 }
 
-SS_GUI::~SS_GUI()
-{
+SS_GUI::~SS_GUI() {
 	delete m_ui;
 }
+
 
 bool SS_GUI::drawVertexLines(const std::vector<IBK::Line> &vertexLines ){
 	QPen penPoly2 (Qt::green, 2, Qt::DashLine);
 
-	size_t scaleFactor = 100;
-	double height = m_ui->graphicsViewSkeleton->height();
-
 	for (size_t i = 0; i < vertexLines.size(); ++i) {
-		QLine line (vertexLines[i].m_p1.m_x*scaleFactor, - vertexLines[i].m_p1.m_y*scaleFactor,
-					vertexLines[i].m_p2.m_x*scaleFactor,  - vertexLines[i].m_p2.m_y*scaleFactor);
+		QLine line (vertexLines[i].m_p1.m_x*SKELETON::UI_CONVERSION_FACTOR, - vertexLines[i].m_p1.m_y*SKELETON::UI_CONVERSION_FACTOR,
+					vertexLines[i].m_p2.m_x*SKELETON::UI_CONVERSION_FACTOR, - vertexLines[i].m_p2.m_y*SKELETON::UI_CONVERSION_FACTOR);
 
 		m_scene->addLine( line, penPoly2);
 	}
@@ -44,257 +43,165 @@ bool SS_GUI::drawVertexLines(const std::vector<IBK::Line> &vertexLines ){
 	return true;
 }
 
-bool SS_GUI::drawPolygon(SKELETON::Polygon poly, const QPen &pen) {
 
-	std::vector< QPointF > eventPoints;
+void SS_GUI::mousePressEvent(QMouseEvent * event) {
+	m_ui->tableWidget->blockSignals(true);
 
-	double height, width;
-	size_t scaleFactor = 100;
-
-	height = m_ui->graphicsViewSkeleton->height();
-	width = m_ui->graphicsViewSkeleton->width();
-
-	QPolygonF polyDraw;
-
-	if ( poly.points().size() < 3 )
-		return false;
-
-	polyDraw.clear();
-	for ( SKELETON::Polygon::Point point : poly.points() )
-		polyDraw << QPointF ( point.m_x*scaleFactor,
-								- point.m_y*scaleFactor );
-
-	polyDraw << QPointF (poly.point(0).m_x, poly.point(0).m_y);
-
-	// break;
-	m_scene->addPolygon(polyDraw, pen);
-
-	for ( IBK::Line line : poly.skeletonLines() )
-		m_scene->addLine( QLineF (	line.m_p1.m_x*scaleFactor,
-									- line.m_p1.m_y*scaleFactor,
-									line.m_p2.m_x*scaleFactor,
-									- line.m_p2.m_y*scaleFactor ), pen );
-
-	m_ui->graphicsViewSkeleton->setScene(m_scene);
-
-	return true;
-}
-
-//void SS_GUI::wheelEvent(QWheelEvent *event)
-//{
-//	if(event->delta() > 0)
-//	{
-//		m_ui->graphicsViewSkeleton->scale(1.05,1.05);
-//	}
-//	else
-//	{
-//		m_ui->graphicsViewSkeleton->scale(1/1.05,1/1.05);
-//	}
-//}
-
-void SS_GUI::mousePressEvent(QMouseEvent * event)
-{
-//	if ( m_polygonItem->is )
-//		m_polygonItem = new QGraphicsPolygonItem;
-
-	// m_ui->graphicsViewSkeleton->setFrameShape(QGraphicsView::NoFrame);
-	QPointF sceneCenter = m_ui->graphicsViewSkeleton->mapToScene( m_ui->graphicsViewSkeleton->viewport()->rect().center() );
+	m_scene->clear();
+	m_polygonItem = new QGraphicsPolygonItem();
+	m_scene->addItem(m_polygonItem);
+	formatPolygon();
 
 	// Detect if the click is in the view.
 	QPoint remapped = m_ui->graphicsViewSkeleton->mapFromParent( event->pos() );
 	if ( m_ui->graphicsViewSkeleton->rect().contains( remapped ) )
 	{
-		QPointF mousePoint = m_ui->graphicsViewSkeleton->mapToScene( remapped );
+		QPointF addedPoint = m_ui->graphicsViewSkeleton->mapToScene( remapped );
 
-//		QPolygonF polyTmp = m_polygonItem->polygon();
-
-//		polyTmp.append(mousePoint);
-
-//		m_ui->tableWidget->insertRow(m_ui->tableWidget->rowCount());
-//		int count = m_ui->tableWidget->rowCount();
-
-////		m_polygonItem->setPolygon(polyTmp);
-
-//		QTableWidgetItem *itemX = new QTableWidgetItem;
-//		QTableWidgetItem *itemY = new QTableWidgetItem;
-
-//		itemX->setText( QString::number( mousePoint.x()/100 ) );
-//		itemY->setText( QString::number( -mousePoint.y()/100 ) );
-
-//		m_ui->tableWidget->setItem( count-1, 0, itemX );
-//		m_ui->tableWidget->setItem( count-1, 1, itemY );
-
-//		m_ui->tableWidget->item( count-1,0)->setText( QString::number( mousePoint.x() ) );
-//		m_ui->tableWidget->item( count-1,1)->setText( QString::number( mousePoint.y() ) );
-
-
-//		m_scene->addEllipse(mousePoint.x(), mousePoint.y(), 5, 5, QPen ( Qt::red ));
-
-		m_ui->lineEditXValue->setText( QString::number( mousePoint.x()/100 ) );
-		m_ui->lineEditYValue->setText( QString::number( -mousePoint.y()/100 ) );
-
-		// m_ui->graphicsViewSkeleton->setScene(m_scene);
-
-
-
+		m_scene->addEllipse(addedPoint.x(), addedPoint.y(), 5, 5, QPen ( Qt::red ));
+		m_polygon.push_back(addedPoint);
 	}
 
+	m_ui->tableWidget->setRowCount(m_polygon.size());
+	QPolygonF drawingPoly;
+	for (unsigned int i=0; i < m_polygon.size(); ++i) {
+		m_ui->tableWidget->setItem(i, 0, new QTableWidgetItem( QString("%1").arg( m_polygon[i].x()/SKELETON::UI_CONVERSION_FACTOR, 3, 'g') ) );
+		m_ui->tableWidget->setItem(i, 1, new QTableWidgetItem( QString("%1").arg(-m_polygon[i].y()/SKELETON::UI_CONVERSION_FACTOR, 3, 'g') ) );
+	}
+	m_polygonItem->setPolygon(m_polygon);
+
+	m_ui->tableWidget->blockSignals(false);
 	event->accept();
-//	m_ui->graphicsViewSkeleton->centerOn(sceneCenter);
-
 }
 
-void SS_GUI::mouseMoveEvent(QMouseEvent *event)
-{
-		QPoint remapped = m_ui->graphicsViewSkeleton->mapFromParent( event->pos() );
-		if ( !m_ui->graphicsViewSkeleton->rect().contains( remapped ) )
-		{
-			m_ui->lineEditXValue->setText( QString::number( remapped.x() ) );
-			m_ui->lineEditYValue->setText( QString::number( remapped.y() ) );
-		}
-}
 
-void SS_GUI::on_pushButtonContinue_pressed()
-{
-	m_draw = true;
-}
-
-void SS_GUI::on_pushButtonCalc_clicked()
-{
+void SS_GUI::on_pushButtonCalc_clicked() {
 
 	SKELETON::Polygon skeletonPoly;
-	QPolygonF poly ( m_polygonItem->polygon() );
-
 	std::vector< QLineF > bisectorLines;
 
-	size_t scale = 1E2;
+	if ( m_ui->checkBoxDirection->isChecked() ) {
+		for ( unsigned int i = 0; i < m_polygon.size(); ++i ) {
 
-	if ( true ) {
-		if ( m_tmpPolygon.size() == 0 ) {
-			if ( m_ui->checkBoxDirection->isChecked() )
-				for ( size_t i=0; i<poly.size(); ++i ) {
-					QPointF pointF ( poly[i].x(),-poly[i].y() );
-					skeletonPoly << SKELETON::Polygon::Point ( pointF.x()/scale, -pointF.y()/scale );
-				}
-			else
-				for ( size_t i=poly.size(); i>0; --i ) {
-					QPointF pointF ( poly[i-1].x(), -poly[i-1].y() );
-					skeletonPoly << SKELETON::Polygon::Point ( pointF.x()/scale, pointF.y()/scale );
-				}
-		} else {
-			skeletonPoly = m_tmpPolygon;
+			QPointF pointF (    m_polygon[i].x(),
+								- m_polygon[i].y() );
+
+			skeletonPoly << SKELETON::Polygon::Point (   pointF.x() / SKELETON::UI_CONVERSION_FACTOR,
+														-pointF.y() / SKELETON::UI_CONVERSION_FACTOR );
 		}
+	} else {
+		for ( unsigned int i = m_polygon.size(); i > 0; --i ) {
 
-		try {
-			skeletonPoly.set(false);
-			skeletonPoly.findSkeletonLines();
-			skeletonPoly.findVertexLines();
+			QPointF pointF (    m_polygon[i-1].x(),
+					- m_polygon[i-1].y() );
 
-		} catch (IBK::Exception &ex) {
-			m_ui->plainTextEditLog->appendPlainText(ex.what());
+			skeletonPoly << SKELETON::Polygon::Point ( pointF.x() / SKELETON::UI_CONVERSION_FACTOR,
+													   pointF.y() / SKELETON::UI_CONVERSION_FACTOR );
 		}
+	}
 
-		for ( size_t i=0; i< poly.size(); ++i ) {
-			if( skeletonPoly.size() == 0 )
-				continue;
-			bisectorLines.push_back( QLineF ( skeletonPoly.point(i).m_x*scale,
-											  skeletonPoly.point(i).m_y*scale,
-											  skeletonPoly.point(i).m_x*scale + skeletonPoly.bisector(i).m_x*10000,
-											  skeletonPoly.point(i).m_y*scale + skeletonPoly.bisector(i).m_y*10000 ) );
-		}
+	try {
+		skeletonPoly.initialize(false);
+		skeletonPoly.findSkeletonLines();
+		skeletonPoly.findVertexLines();
 
-//		for ( SKELETON::Polygon::Origin ori : skeletonPoly.origins() )
-//			m_scene->addLine( QLineF ( ori.m_point.m_x*scale, -ori.m_point.m_y*scale,
-//									   ori.m_point.m_x*scale + ori.m_vector.m_x*scale*2, -ori.m_point.m_y*scale - ori.m_vector.m_y*scale*2 ),
-//							  QPen ( Qt::red, 10, Qt::DashLine ));
+	} catch (IBK::Exception &ex) {
+		m_ui->plainTextEditLog->appendPlainText(ex.what());
+	}
 
+	const std::vector<SKELETON::Polygon::Point> &points = skeletonPoly.points();
+	for ( size_t i=0; i < points.size(); ++i ) {
+		if( skeletonPoly.size() == 0 )
+			continue;
+		bisectorLines.push_back( QLineF ( points[i].m_x * SKELETON::UI_CONVERSION_FACTOR,
+										  points[i].m_y * SKELETON::UI_CONVERSION_FACTOR,
+										  points[i].m_x * SKELETON::UI_CONVERSION_FACTOR + skeletonPoly.bisector(i).m_x*10000,
+										  points[i].m_y * SKELETON::UI_CONVERSION_FACTOR + skeletonPoly.bisector(i).m_y*10000 ) );
+	}
 
-		for ( IBK::Line line : skeletonPoly.skeletonLines() )
-			m_scene->addLine( QLineF ( line.m_p1.m_x*scale, -line.m_p1.m_y*scale,
-									   line.m_p2.m_x*scale, -line.m_p2.m_y*scale ),
-							  QPen ( Qt::darkGreen, 5, Qt::SolidLine ));
-		for ( IBK::Line vertexLine : skeletonPoly.vertexLines() )
-			m_scene->addLine( QLineF ( vertexLine.m_p1.m_x*scale, -vertexLine.m_p1.m_y*scale,
-									   vertexLine.m_p2.m_x*scale, -vertexLine.m_p2.m_y*scale ),
-							  QPen ( Qt::darkRed, 2, Qt::DashLine ));
-//		for ( QLineF lineBisector : bisectorLines )
-//			m_scene->addLine( lineBisector, QPen ( Qt::darkYellow, 2, Qt::DashLine ));
+	for (const IBK::Line &line : skeletonPoly.skeletonLines() ) {
+		m_scene->addLine( QLineF (  line.m_p1.m_x * SKELETON::UI_CONVERSION_FACTOR,
+									-line.m_p1.m_y * SKELETON::UI_CONVERSION_FACTOR,
+									line.m_p2.m_x * SKELETON::UI_CONVERSION_FACTOR,
+									-line.m_p2.m_y * SKELETON::UI_CONVERSION_FACTOR ),
+						  QPen ( Qt::darkGreen, 5, Qt::SolidLine ));
+	}
+	for (const IBK::Line &vertexLine : skeletonPoly.vertexLines() ) {
+		m_scene->addLine( QLineF (  vertexLine.m_p1.m_x * SKELETON::UI_CONVERSION_FACTOR,
+									-vertexLine.m_p1.m_y * SKELETON::UI_CONVERSION_FACTOR,
+									vertexLine.m_p2.m_x * SKELETON::UI_CONVERSION_FACTOR,
+									-vertexLine.m_p2.m_y * SKELETON::UI_CONVERSION_FACTOR),
+						  QPen ( Qt::darkRed, 2, Qt::DashLine ));
+	}
 
-		int counter = 0;
-		for ( std::vector< SKELETON::Polygon::Point > shrinkedPoly : skeletonPoly.shrinkedPolygons()) {
-			if ( counter == 0 ) {
-				++counter; continue;
+	for (unsigned int i = 1; i < skeletonPoly.shrinkedPolygons().size(); ++i) {
+
+		const std::vector< SKELETON::Polygon::Point > shrinkedPoly = skeletonPoly.shrinkedPolygons()[i];
+		QPolygonF polyShrinked;
+
+		if ( !shrinkedPoly.empty() ) {
+			for (const SKELETON::Polygon::Point &shrinkedPolyPoint : shrinkedPoly ) {
+				polyShrinked << QPointF (  shrinkedPolyPoint.m_x * SKELETON::UI_CONVERSION_FACTOR,
+										   -shrinkedPolyPoint.m_y * SKELETON::UI_CONVERSION_FACTOR );
 			}
-			++counter;
-			QPolygonF polyShrinked;
-			if ( !shrinkedPoly.empty() ) {
-				m_ui->tableWidget->setRowCount(shrinkedPoly.size());
+			polyShrinked << QPointF ( shrinkedPoly[0].m_x * SKELETON::UI_CONVERSION_FACTOR,
+					-shrinkedPoly[0].m_y * SKELETON::UI_CONVERSION_FACTOR);
 
-				int countRow = 0;
-				for ( SKELETON::Polygon::Point shrinkedPolyPoint : shrinkedPoly ) {
-					polyShrinked << QPointF ( shrinkedPolyPoint.m_x*scale, -shrinkedPolyPoint.m_y*scale );
-				}
-				polyShrinked << QPointF ( shrinkedPoly[0].m_x*scale, -shrinkedPoly[0].m_y*scale );
-				m_scene->addPolygon( polyShrinked, QPen ( Qt::green, 1, Qt::DashLine ));
-			}
+			m_scene->addPolygon( polyShrinked, QPen ( Qt::green, 1, Qt::DashLine ));
 		}
 	}
 }
 
-void SS_GUI::on_Clear_clicked()
-{
-	m_polygon = m_polygonItem->polygon();
-	m_scene->clear();
-	m_polygonItem = new QGraphicsPolygonItem;
-	m_polygonItem->setPolygon(m_polygon);
-	m_scene->addItem(m_polygonItem);
-}
 
-void SS_GUI::on_pushButtonClearAll_clicked()
-{
+void SS_GUI::on_pushButtonClearAll_clicked() {
 	m_scene->clear();
+	m_polygonItem = new QGraphicsPolygonItem();
+	m_scene->addItem(m_polygonItem);
+	formatPolygon();
 	m_polygon.clear();
-	m_polygonItem = new QGraphicsPolygonItem;
 	m_ui->tableWidget->setRowCount(0);
+}
+
+void SS_GUI::on_tableWidget_cellChanged(int row, int column)  {
+	Q_ASSERT(m_polygon.size() == m_ui->tableWidget->rowCount());
+
+	m_scene->clear();
+	m_polygonItem = new QGraphicsPolygonItem();
 	m_scene->addItem(m_polygonItem);
-}
+	formatPolygon();
 
-void SS_GUI::on_pushButtonAddLine_clicked()
-{
-	m_ui->tableWidget->insertRow(m_ui->tableWidget->rowCount());
-}
+	bool ok;
+	double x = m_ui->tableWidget->item(row, 0)->text().toDouble(&ok);
+	double y = m_ui->tableWidget->item(row, 1)->text().toDouble(&ok);
 
-void SS_GUI::on_tableWidget_itemChanged(QTableWidgetItem *item)
-{
-	QTableWidget *tw = m_ui->tableWidget;
-	m_polygon.clear();
-	for ( size_t i=0; i<m_ui->tableWidget->rowCount(); ++i ) {
-		m_scene->clear();
-		bool checkX = false;
-		bool checkY = false;
-		/*
-		bool *checkX = new bool;
-		bool *checkY = new bool;*/
-		double x;
-		double y;
-		if ( tw->item(i,0) != 0 )
-			x = tw->item( i, 0 )->text().toDouble(&checkX);
-		if ( tw->item(i,1) != 0 )
-			y = tw->item( i, 1 )->text().toDouble(&checkY);
-		if ( checkX && checkY ) {
-			m_polygon.push_back( QPointF( x*100, -y*100 ) );
-			checkX = true;
-			checkY = true;
-		}
+	if (!ok) {
+		m_ui->tableWidget->item(row, 0)->setText(QString("%1").arg(m_polygon[row].x() / SKELETON::UI_CONVERSION_FACTOR));
+		m_ui->tableWidget->item(row, 1)->setText(QString("%1").arg(m_polygon[row].y() / SKELETON::UI_CONVERSION_FACTOR));
+		return;
 	}
-	if (m_polygon.size()>2) {
-		m_polygonItem = new QGraphicsPolygonItem;
-		m_polygonItem->setPolygon(m_polygon);
-		m_scene->addItem(m_polygonItem);
-	}
+
+	m_polygon[row].setX(x * SKELETON::UI_CONVERSION_FACTOR);
+	m_polygon[row].setY(y * SKELETON::UI_CONVERSION_FACTOR);
+
+	m_polygonItem->setPolygon(m_polygon);
 }
 
-void SS_GUI::on_pushButtonDeleteLastLine_clicked()
-{
-	m_ui->tableWidget->setRowCount(m_ui->tableWidget->rowCount()-1);
+void SS_GUI::formatPolygon() {
+	Q_ASSERT(m_polygonItem != nullptr);
+	m_polygonItem->setPen(QPen(Qt::red, 5));
 }
+
+
+void SS_GUI::on_pushButtonDeleteLastPoint_clicked() {
+	if (m_polygon.isEmpty())
+		return;
+
+	m_scene->clear();
+	m_polygonItem = new QGraphicsPolygonItem();
+	m_scene->addItem(m_polygonItem);
+	formatPolygon();
+
+	m_polygon.pop_back();
+	m_polygonItem->setPolygon(m_polygon);
+}
+
