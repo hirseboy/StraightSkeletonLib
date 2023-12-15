@@ -195,7 +195,7 @@ public:
 	};
 
 	/*! Sets Bisectors, Vectors and Lines of Polygon */
-	bool set(bool setEvents);
+        bool initialize(bool setEvents);
 
 	/*! Sets the Bisector Vectors of the Polygon Corner Points */
 	bool setBisectors();

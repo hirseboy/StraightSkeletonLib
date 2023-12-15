@@ -20,7 +20,7 @@ Polygon::Polygon(const std::vector<IBK::point2D<double> > &points, bool setEvent
 	for (size_t i=0; i<points.size(); ++i) {
 		m_points.push_back(Point(points[i]));
 	}
-	if (!set(setEvents))
+	if (!initialize(setEvents))
 		throw IBK::Exception(IBK::FormatString("Polygon could not be initialized."), "[Polygon::Polygon]");
 }
 
@@ -32,7 +32,7 @@ Polygon::~Polygon()
 	m_lineVectors.clear();
 }
 
-bool Polygon::set(bool setEvents)
+bool Polygon::initialize(bool setEvents)
 {
 	if (!setVectors())
 		throw IBK::Exception(IBK::FormatString("Vectors could not be initialized.\n"), "[Polygon::set]");
@@ -336,7 +336,7 @@ bool Polygon::setSplitEventsBisector()
 						if ( !triangle.checkSanity<DIGITS>() )
 							continue;
 
-						triangle.set(false);
+						triangle.initialize(false);
 
 						vec = triangle.m_bisectors[1];
 					} else {
@@ -346,7 +346,7 @@ bool Polygon::setSplitEventsBisector()
 						if ( !triangle.checkSanity<DIGITS>() )
 							continue;
 
-						triangle.set(false);
+						triangle.initialize(false);
 
 						vec = triangle.m_bisectors[2];
 					}
@@ -531,7 +531,7 @@ double Polygon::distanceToLine(const size_t &pointIdx)
 
 std::vector<Polygon> Polygon::shrink()
 {
-	set(true);
+	initialize(true);
 
 	if (m_events.empty())
 		throw IBK::Exception( IBK::FormatString("Events not set.\n"), "[Polygon::shrink]");
@@ -602,7 +602,7 @@ void Polygon::findSkeletonLines()
 		}
 	}
 
-	set(false);
+	initialize(false);
 
 	polys.push_back(*this);
 
@@ -628,7 +628,7 @@ void Polygon::findSkeletonLines()
 				tempPolys = polys[0].shrink();
 				if ( tempPolys.empty() ) {
 					polys[0].checkSanity<DIGITS>();
-					polys[0].set(true);
+					polys[0].initialize(true);
 //					for ( size_t i=0; i<polys[0].size(); ++i ) {
 //						if ( checkPoints<DIGITS>( polys[0].point(i) , m_events[0].m_point) )
 //							addOrigin( SKELETON::Polygon::Origin ( polys[0].point(i), i, polys[0].m_bisectors[i], false ) );
@@ -652,7 +652,7 @@ void Polygon::findSkeletonLines()
 			}
 			else {
 				// set events
-				polys[0].set(true);
+				polys[0].initialize(true);
 
 				// insert empty polygon to store last Edge Point
 				SKELETON::Polygon tempPoly;
@@ -793,7 +793,7 @@ std::vector<Polygon> Polygon::shrinkSplit() {
 
 		polys[i].m_skeletonLines.insert( polys[i].m_skeletonLines.begin(), m_skeletonLines.begin(), m_skeletonLines.end() );
 
-		polys[i].set(false);
+		polys[i].initialize(false);
 
 		// check for points
 		for (size_t k=0; k<m_events.size(); ++k) {
@@ -864,7 +864,7 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 				continue;
 
 			try {
-				polys[i].set(true);
+				polys[i].initialize(true);
 			} catch (IBK::Exception &ex) {
 				ex.writeMsgStackToError();
 				throw IBK::Exception ( "Could not set Polygon", "[Polygon::shrinkEdge]" );
@@ -925,8 +925,7 @@ std::vector<Polygon> Polygon::shrinkEdge() {
 	return polys;
 }
 
-std::vector< std::vector<Polygon::Point> > Polygon::shrinkedPolygons() const
-{
+std::vector< std::vector<Polygon::Point> > Polygon::shrinkedPolygons() const {
 	return m_shrinkedPolygons;
 }
 
@@ -953,8 +952,7 @@ std::vector<Polygon::Event> Polygon::events()
 	return m_events;
 }
 
-std::vector<Polygon::Point> Polygon::points()
-{
+std::vector<Polygon::Point> Polygon::points() {
 	return m_points;
 }
 
